@@ -51,6 +51,7 @@
     <ClInclude Include="CharacterControl\testfunc_c_stdcall.h" />
     <ClInclude Include="navCell.h" />
     <ClInclude Include="navMesh.h" />
+    <ClInclude Include="PriorityQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharacterControl\Characters\SoldierNPC.cpp">
@@ -87,6 +88,7 @@
     <ClCompile Include="CharacterControl\main.cpp" />
     <ClCompile Include="navCell.cpp" />
     <ClCompile Include="navMesh.cpp" />
+    <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Masm Include="CharacterControl\test.asm" />

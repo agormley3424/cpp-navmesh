@@ -62,7 +62,17 @@ double navCell::getStartDist()
 	return distFromStart;
 }
 
-double navCell::setStartDist(double val)
+void navCell::setStartDist(double val)
 {
 	distFromStart = val;
+}
+
+void navCell::setParent(navCell* n)
+{
+	parent = n;
+}
+
+navCell* navCell::getParent()
+{
+	return parent;
 }

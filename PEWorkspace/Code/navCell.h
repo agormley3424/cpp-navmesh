@@ -32,7 +32,11 @@ public:
 
 	double getStartDist();
 
-	double setStartDist(double val);
+	void setStartDist(double val);
+
+	void setParent(navCell* n);
+
+	navCell* getParent();
 
 
 private:
@@ -45,6 +49,7 @@ private:
 	signed int value;
 	bool blocked = false;
 	double distFromStart;
+	navCell* parent = nullptr;
 };
 
 

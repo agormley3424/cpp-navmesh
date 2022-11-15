@@ -1,0 +1,46 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
+  Assembling CharacterControl\test.asm...
+  Assembling CharacterControl\testfunc_c_stdcall.asm...
+  SoldierNPC.cpp
+  SoldierNPCAnimationSM.cpp
+  SoldierNPCBehaviorSM.cpp
+  SoldierNPCMovementSM.cpp
+  ClientSpaceShip.cpp
+  ClientSpaceShipControls.cpp
+  ClientCharacterControlGame.cpp
+  ClientGameObjectManagerAddon.cpp
+  Events.cpp
+  GameObjectManagerAddon.cpp
+  GlobalRegistry.cpp
+  ServerCharacterControlGame.cpp
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\charactercontrol\characters\soldiernpc.cpp(91): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\charactercontrol\characters\soldiernpcbehaviorsm.cpp(104): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  ServerGameObjectManagerAddon.cpp
+  ClientTank.cpp
+  WayPoint.cpp
+  main.cpp
+  navCell.cpp
+  navMesh.cpp
+  PriorityQueue.cpp
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(11): warning C4018: '<': signed/unsigned mismatch
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(16): warning C4018: '<': signed/unsigned mismatch
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(50): warning C4018: '<': signed/unsigned mismatch
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navcell.cpp(58): error C4716: 'navCell::unBlock': must return a value
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navcell.cpp(53): error C4716: 'navCell::block': must return a value
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(45): error C2374: 'newID': redefinition; multiple initialization
+  c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(41): note: see declaration of 'newID'
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(75): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(75): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(78): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(80): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(57): error C2088: '[': illegal for class
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(57): error C2661: 'std::forward_list<navCell *,std::allocator<_Ty>>::insert_after': no overloaded function takes 1 arguments
+          with
+          [
+              _Ty=navCell *
+          ]
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(62): error C2088: '[': illegal for class
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(200): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navmesh.cpp(224): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data

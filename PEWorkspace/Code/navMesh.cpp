@@ -3,6 +3,7 @@
 #include <forward_list>
 #include "navCell.h"
 #include <queue>
+#include "PriorityQueue.h"
 
 const std::unordered_map<unsigned int, std::forward_list<navCell*>>& navMesh::getGraph()
 {
@@ -14,13 +15,13 @@ const std::unordered_map<unsigned int, navCell>& navMesh::getCells()
 	return cells;
 }
 
-// Add a cell to the graph
+// Add a cell to the graph (Helper function to be added later)
 void navMesh::addToGraph(navCell& newCell)
 {
 
 }
 
-// Remove a cell from the graph
+// Remove a cell from the graph (Helper function to be added later)
 void removeFromGraph(unsigned int ID)
 {
 
@@ -191,17 +192,23 @@ navCell* navMesh::aStar(unsigned int start, unsigned int end)
 	// How do I calculate that again? If the cells are aligned with the world axes, I can look at the x, y, and z component differences
 	// If they aren't aligned, this might be trickier...
 
-	std::priority_queue<navCell*> fringe;
+	PriorityQueue fringe;
 	std::unordered_set<unsigned int> discovered;
 
 	startCell.setStartDist(0);
 
-	fringe.push(&start, startCell.getValue() + manhattan(startCell.getCenter(), endCell.getCenter()));
+	fringe.push(&cells[start], startCell.getValue() + manhattan(startCell.getCenter(), endCell.getCenter()));
 
-	while (!fringe.empty())
+	while (!fringe.isEmpty())
 	{
 		navCell* targetCell = fringe.top();
 		fringe.pop();
+
+		if (targetCell->getID() == end)
+		{
+			targetCell->setParent(targetCell);
+			return targetCell;
+		}
 
 		std::forward_list<navCell*> &row = graph[targetCell->getID()];
 
@@ -210,22 +217,27 @@ navCell* navMesh::aStar(unsigned int start, unsigned int end)
 			navCell* neighbor = *iter;
 
 			// If we haven't found this node already, add it to the fringe
-			if (discovered.find(neighbor->getID) == discovered.end())
+			if (discovered.find(neighbor->getID()) == discovered.end())
 			{
 				// Assuming all cells are equally adjacent...for now
 				neighbor->setStartDist(targetCell->getStartDist() + 1.0);
-				fringe.push(neighbor);
+				fringe.push(neighbor, neighbor->getValue() + manhattan(neighbor->getCenter(), endCell.getCenter()));
+
+				neighbor->setParent(targetCell);
 			}
 			// Else, update its value in the fringe (might not be necessary?)
 			// I'll definitely need my own data structure to do this
 			// Or do I...the fringe only stores pointers, nothing's stopping me from modifying the cells themselves!
 			else {
-				neighbor->setStartDist(min(neighbor->getStartDist(), targetCell->getStartDist() + 1.0));
+				if ((targetCell->getStartDist() + 1.0 - neighbor->getStartDist() < std::numeric_limits<double>::epsilon()))
+				{
+					neighbor->setStartDist(targetCell->getStartDist() + 1.0);
+					neighbor->setParent(targetCell);
+				}
 			}
 		}
-
-		// I also need a way to trace back the whole path from the end...maybe it's a good time to take a break!
 	}
 
-
+	// If nothing has been returned yet, something has gone wrong
+	return nullptr;
 }

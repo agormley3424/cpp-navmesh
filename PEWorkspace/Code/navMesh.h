@@ -33,7 +33,7 @@ public:
 	navCell* aStar(unsigned int start, unsigned int end);
 
 	// Returns the manhattan distance between two vectors
-	float manhattan(Vector3 vec1, Vector3 vec2)
+	float manhattan(Vector3 vec1, Vector3 vec2);
 
 
 private:

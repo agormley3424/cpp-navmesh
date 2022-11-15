@@ -1,0 +1,30 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
+  auxiliar.c
+  buffer.c
+  except.c
+  inet.c
+  io.c
+  luasocket.c
+  mime.c
+  options.c
+  select.c
+  tcp.c
+  timeout.c
+  udp.c
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\auxiliar.c(59): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\auxiliar.c(96): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\auxiliar.c(110): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  wsocket.c
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\options.c(37): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\inet.c(334): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
+c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\wsocket.c(364): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'WCHAR *'
+  c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\wsocket.c(364): note: consider using '%ls' in the format string
+  c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\wsocket.c(364): note: consider using '%lls' in the format string
+  c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\wsocket.c(364): note: consider using '%Ls' in the format string
+  c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\luasocket_dist\src\wsocket.c(364): note: consider using '%ws' in the format string
+  luasocket_dist-win32d3d9.vcxproj -> C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\..\build\luasocket_dist-win32d3d9.lib
