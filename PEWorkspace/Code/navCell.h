@@ -4,54 +4,90 @@
 #include <vector>
 #include <unordered_set>
 #include "PrimeEngine/Math/Vector3.h"
+#include "PrimeEngine/APIAbstraction/APIAbstractionDefines.h"
+#include "PrimeEngine/Lua/LuaEnvironment.h"
+#include "PrimeEngine/Lua/EventGlue/EventDataCreators.h"
+#include <string>
+#include "PrimeEngine/Math/Matrix4x4.h"
+#include "PrimeEngine/Events/Component.h"
 
-class navCell {
-public:
+namespace CharacterControl {
+namespace Components {
 
-	navCell(unsigned int ID, std::string SHAPE, signed int VALUE);
+	struct navCell : public PE::Components::Component  {
+	public:
 
-	unsigned int getID();
+		navCell(unsigned int ID, std::string SHAPE, signed int VALUE);
 
-	std::string getShape();
+		unsigned int getID();
 
-	const std::vector<Vector3>& getCorners();
+		std::string getShape();
 
-	Vector3 getCenter();
+		const std::vector<Vector3>& getCorners();
 
-	const std::unordered_set<unsigned int>& getNeighbors();
+		Vector3 getCenter();
 
-	signed int getValue();
+		const std::unordered_set<unsigned int>& getNeighbors();
 
-	bool hasNeighbor(unsigned int ID);
+		signed int getValue();
 
-	bool isBlocked();
+		bool hasNeighbor(unsigned int ID);
 
-	bool block();
+		bool isBlocked();
 
-	bool unBlock();
+		bool block();
 
-	double getStartDist();
+		bool unBlock();
 
-	void setStartDist(double val);
+		double getStartDist();
 
-	void setParent(navCell* n);
+		void setStartDist(double val);
 
-	navCell* getParent();
+		void setParent(navCell* n);
+
+		navCell* getParent();
+
+		navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const CharacterControl::Events::Event_CREATE_NAVCELL* pEvt);
+
+	private:
+
+		unsigned int id;
+		std::string shape;
+		std::vector<Vector3> cornerPoints;
+		Vector3 center;
+		std::unordered_set<unsigned int> neighbors;
+		signed int value;
+		bool blocked = false;
+		double distFromStart = std::numeric_limits<double>::max();
+		navCell* parent = nullptr;
+		Matrix4x4 m_base;
+	};
+}
+
+	namespace Events {
+		struct Event_CREATE_NAVCELL : public PE::Events::Event
+		{
+			PE_DECLARE_CLASS(Event_CREATE_NAVCELL);
+
+			virtual void addDefaultComponents();
+
+			// override SetLuaFunctions() since we are adding custom Lua interface
+			static void SetLuaFunctions(PE::Components::LuaEnvironment* pLuaEnv, lua_State* luaVM);
+
+			// Lua interface prefixed with l_
+			static int l_Construct(lua_State* luaVM);
+
+			Matrix4x4 m_base;
+			unsigned int m_id;
+			std::unordered_set<signed int> m_neighbors;
+			signed int m_value;
+			std::string m_shape;
 
 
-private:
-
-	unsigned int id;
-	std::string shape;
-	std::vector<Vector3> cornerPoints;
-	Vector3 center;
-	std::unordered_set<unsigned int> neighbors;
-	signed int value;
-	bool blocked = false;
-	double distFromStart;
-	navCell* parent = nullptr;
-};
-
+			PEUUID m_peuuid; // unique object id
+		};
+	}
+}
 
 #endif
 

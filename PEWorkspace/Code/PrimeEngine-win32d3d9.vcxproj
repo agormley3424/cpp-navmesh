@@ -1005,6 +1005,8 @@
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_emission.dds" />
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_normal.dds" />
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_specular.dds" />
+    <None Include="navCell.lua" />
+    <None Include="navCell.py" />
     <None Include="PrimeEngine\APIAbstraction\Effect\Effect.lua" />
     <None Include="PrimeEngine\Events\Component.lua" />
     <None Include="PrimeEngine\Lua\CommandServer.lua" />

@@ -1,78 +1,172 @@
 #include "navCell.h"
+#include "PrimeEngine/Events/Component.h"
 
-navCell::navCell(unsigned int ID, std::string SHAPE, signed int VALUE)
-{
-	id = ID;
-	shape = SHAPE;
-	value = VALUE;
-}
+using namespace PE;
+using namespace PE::Components;
+using namespace CharacterControl::Events;
 
-unsigned int navCell::getID()
-{
-	return id;
-}
+namespace CharacterControl {
+	namespace Components {
 
-std::string navCell::getShape()
-{
-	return shape;
-}
+		//navCell::navCell(unsigned int ID, std::string SHAPE, signed int VALUE)
+		//{
+		//	id = ID;
+		//	shape = SHAPE;
+		//	value = VALUE;
+		//}
 
-const std::vector<Vector3>& navCell::getCorners()
-{
-	return cornerPoints;
-}
+		unsigned int navCell::getID()
+		{
+			return id;
+		}
 
-Vector3 navCell::getCenter()
-{
-	return center;
-}
+		std::string navCell::getShape()
+		{
+			return shape;
+		}
 
-signed int navCell::getValue()
-{
-	return value;
-}
+		const std::vector<Vector3>& navCell::getCorners()
+		{
+			return cornerPoints;
+		}
 
-const std::unordered_set<unsigned int>& navCell::getNeighbors()
-{
-	return neighbors;
-}
+		Vector3 navCell::getCenter()
+		{
+			return center;
+		}
 
-bool navCell::hasNeighbor(unsigned int ID)
-{
-	return neighbors.find(ID) != neighbors.end();
-}
+		signed int navCell::getValue()
+		{
+			return value;
+		}
 
-bool navCell::isBlocked()
-{
-	return blocked;
-}
+		const std::unordered_set<unsigned int>& navCell::getNeighbors()
+		{
+			return neighbors;
+		}
 
-bool navCell::block()
-{
-	blocked = true;;
-}
+		bool navCell::hasNeighbor(unsigned int ID)
+		{
+			return neighbors.find(ID) != neighbors.end();
+		}
 
-bool navCell::unBlock()
-{
-	blocked = false;
-}
+		bool navCell::isBlocked()
+		{
+			return blocked;
+		}
 
-double navCell::getStartDist()
-{
-	return distFromStart;
-}
+		bool navCell::block()
+		{
+			blocked = true;;
+		}
 
-void navCell::setStartDist(double val)
-{
-	distFromStart = val;
-}
+		bool navCell::unBlock()
+		{
+			blocked = false;
+		}
 
-void navCell::setParent(navCell* n)
-{
-	parent = n;
-}
+		double navCell::getStartDist()
+		{
+			return distFromStart;
+		}
 
-navCell* navCell::getParent()
-{
-	return parent;
+		void navCell::setStartDist(double val)
+		{
+			distFromStart = val;
+		}
+
+		void navCell::setParent(navCell* n)
+		{
+			parent = n;
+		}
+
+		navCell* navCell::getParent()
+		{
+			return parent;
+		}
+
+
+
+		navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
+			: Component(context, arena, hMyself)
+		{
+			id = pEvt->m_id;
+
+			for (auto i = pEvt->m_neighbors.begin(); i != pEvt->m_neighbors.end(); i++)
+			{
+				neighbors.insert(*i);
+			}
+
+			m_base = pEvt->m_base;
+
+			shape = pEvt->m_shape;
+
+			value = pEvt->m_value;
+		}
+
+	}
+	void Event_CREATE_NAVCELL::SetLuaFunctions(PE::Components::LuaEnvironment* pLuaEnv, lua_State* luaVM)
+	{
+		static const struct luaL_Reg l_Event_CREATE_NAVMESH[] = {
+		{"Construct", l_Construct},
+		{NULL, NULL} // sentinel
+		};
+
+		// register the functions in current lua table which is the table for Event_CreateSoldierNPC
+		luaL_register(luaVM, 0, l_Event_CREATE_NAVMESH);
+	}
+
+	namespace Events {
+
+		int Event_CREATE_NAVCELL::l_Construct(lua_State* luaVM)
+		{
+			PE::Handle h("EVENT", sizeof(Event_CREATE_NAVCELL));
+			Event_CREATE_NAVCELL* pEvt = new(h) Event_CREATE_NAVCELL;
+
+			// get arguments from stack
+			int numArgs, numArgsConst;
+			numArgs = numArgsConst = 20;
+
+			pEvt->m_shape = lua_tostring(luaVM, -numArgs--);
+
+			float positionFactor = 1.0f / 100.0f;
+
+			pEvt->m_id = (unsigned int)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+
+			for (int i = 0; i < 4; ++i)
+			{
+				signed int n = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+
+				if (n >= 0)
+				{
+					pEvt->m_neighbors.insert(n);
+				}
+			}
+
+			pEvt->m_value = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+
+			Vector3 pos, u, v, n;
+			pos.m_x =
+				pos.m_y = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+			pos.m_z = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+
+			u.m_x = (float)lua_tonumber(luaVM, -numArgs--); u.m_y = (float)lua_tonumber(luaVM, -numArgs--); u.m_z = (float)lua_tonumber(luaVM, -numArgs--);
+			v.m_x = (float)lua_tonumber(luaVM, -numArgs--); v.m_y = (float)lua_tonumber(luaVM, -numArgs--); v.m_z = (float)lua_tonumber(luaVM, -numArgs--);
+			n.m_x = (float)lua_tonumber(luaVM, -numArgs--); n.m_y = (float)lua_tonumber(luaVM, -numArgs--); n.m_z = (float)lua_tonumber(luaVM, -numArgs--);
+
+			pEvt->m_peuuid = LuaGlue::readPEUUID(luaVM, -numArgs--);
+
+			lua_pop(luaVM, numArgsConst); //Second arg is a count of how many to pop
+
+			pEvt->m_base.loadIdentity();
+			pEvt->m_base.setPos(pos);
+			pEvt->m_base.setU(u);
+			pEvt->m_base.setV(v);
+			pEvt->m_base.setN(n);
+
+			LuaGlue::pushTableBuiltFromHandle(luaVM, h);
+
+			return 1;
+		}
+	}
 }
