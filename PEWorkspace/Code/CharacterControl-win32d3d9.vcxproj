@@ -132,7 +132,9 @@ copy /Y "C:/Program Files (x86)/Windows Kits/8.0\bin\x86\d3dcompiler_46.dll" "$(
     <ClInclude Include="CharacterControl\test.h" />
     <ClInclude Include="CharacterControl\testfunc_c_stdcall.h" />
     <ClInclude Include="navCell.h" />
-    <ClInclude Include="navMesh.h" />
+    <ClInclude Include="navMesh.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="PriorityQueue.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +155,9 @@ copy /Y "C:/Program Files (x86)/Windows Kits/8.0\bin\x86\d3dcompiler_46.dll" "$(
     <ClCompile Include="CharacterControl\WayPoint.cpp" />
     <ClCompile Include="CharacterControl\main.cpp" />
     <ClCompile Include="navCell.cpp" />
-    <ClCompile Include="navMesh.cpp" />
+    <ClCompile Include="navMesh.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>

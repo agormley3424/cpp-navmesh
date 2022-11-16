@@ -1,5 +1,6 @@
 #include "navCell.h"
 #include "PrimeEngine/Events/Component.h"
+#include <iostream>
 
 using namespace PE;
 using namespace PE::Components;
@@ -7,6 +8,8 @@ using namespace CharacterControl::Events;
 
 namespace CharacterControl {
 	namespace Components {
+
+		PE_IMPLEMENT_CLASS1(navCell, Component);
 
 		//navCell::navCell(unsigned int ID, std::string SHAPE, signed int VALUE)
 		//{
@@ -55,12 +58,12 @@ namespace CharacterControl {
 			return blocked;
 		}
 
-		bool navCell::block()
+		void navCell::block()
 		{
 			blocked = true;;
 		}
 
-		bool navCell::unBlock()
+		void navCell::unBlock()
 		{
 			blocked = false;
 		}
@@ -104,19 +107,33 @@ namespace CharacterControl {
 			value = pEvt->m_value;
 		}
 
-	}
-	void Event_CREATE_NAVCELL::SetLuaFunctions(PE::Components::LuaEnvironment* pLuaEnv, lua_State* luaVM)
-	{
-		static const struct luaL_Reg l_Event_CREATE_NAVMESH[] = {
-		{"Construct", l_Construct},
-		{NULL, NULL} // sentinel
-		};
+		//navCell::navCell()
+		//{
+		//	std::cerr << "The default constructor for navCell is being called. This shouldn't be happening!\n";
+		//}
 
-		// register the functions in current lua table which is the table for Event_CreateSoldierNPC
-		luaL_register(luaVM, 0, l_Event_CREATE_NAVMESH);
-	}
+		void navCell::addDefaultComponents()
+		{
+			Component::addDefaultComponents();
 
+			// custom methods of this component
+		}
+
+	}
 	namespace Events {
+
+		PE_IMPLEMENT_CLASS1(Event_CREATE_NAVCELL, PE::Events::Event);
+
+		void Event_CREATE_NAVCELL::SetLuaFunctions(PE::Components::LuaEnvironment* pLuaEnv, lua_State* luaVM)
+		{
+			static const struct luaL_Reg l_Event_CREATE_NAVMESH[] = {
+			{"Construct", l_Construct},
+			{NULL, NULL} // sentinel
+			};
+
+			// register the functions in current lua table which is the table for Event_CreateSoldierNPC
+			luaL_register(luaVM, 0, l_Event_CREATE_NAVMESH);
+		}
 
 		int Event_CREATE_NAVCELL::l_Construct(lua_State* luaVM)
 		{
@@ -168,5 +185,5 @@ namespace CharacterControl {
 
 			return 1;
 		}
-	}
-}
+	};
+};
