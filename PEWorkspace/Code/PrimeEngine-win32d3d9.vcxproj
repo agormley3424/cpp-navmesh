@@ -442,6 +442,7 @@
     <None Include="..\AssetsOut\CharacterControl\AnimationSpeedSets\m98.x.sset" />
     <None Include="..\AssetsOut\CharacterControl\AnimationSpeedSets\mg34.x.sset" />
     <None Include="..\AssetsOut\CharacterControl\AnimationSpeedSets\mp40.x.sset" />
+    <None Include="..\AssetsOut\CharacterControl\GameObjectMetaScripts\navCell.py" />
     <None Include="..\AssetsOut\CharacterControl\GameObjectMetaScripts\NPCSoldierGuard.py" />
     <None Include="..\AssetsOut\CharacterControl\GameObjectMetaScripts\WayPoint.py" />
     <None Include="..\AssetsOut\CharacterControl\IndexBuffers\m98.x_m98main_ib.bufa" />
@@ -487,6 +488,7 @@
     <None Include="..\AssetsOut\CharacterControl\PositionBuffers\m98.x_m98main_vb.bufa" />
     <None Include="..\AssetsOut\CharacterControl\PositionBuffers\mg34.x_mg34main_vb.bufa" />
     <None Include="..\AssetsOut\CharacterControl\PositionBuffers\mp40.x_mp40main_vb.bufa" />
+    <None Include="..\AssetsOut\CharacterControl\Scripts\navCell.lua" />
     <None Include="..\AssetsOut\CharacterControl\Scripts\SoldierNPC.lua" />
     <None Include="..\AssetsOut\CharacterControl\Scripts\WayPoint.lua" />
     <None Include="..\AssetsOut\CharacterControl\TangentBuffers\m98.x_m98main_tb.bufa" />
@@ -1005,12 +1007,6 @@
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_emission.dds" />
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_normal.dds" />
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_specular.dds" />
-    <None Include="navCell.lua">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </None>
-    <None Include="navCell.py">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </None>
     <None Include="PrimeEngine\APIAbstraction\Effect\Effect.lua" />
     <None Include="PrimeEngine\Events\Component.lua" />
     <None Include="PrimeEngine\Lua\CommandServer.lua" />

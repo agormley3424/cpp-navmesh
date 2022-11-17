@@ -144,15 +144,15 @@ namespace CharacterControl {
 			int numArgs, numArgsConst;
 			numArgs = numArgsConst = 20;
 
-			pEvt->m_shape = lua_tostring(luaVM, -numArgs--);
+			pEvt->m_shape = lua_tostring(luaVM, -numArgs--); // Arg 1
 
 			float positionFactor = 1.0f / 100.0f;
 
-			pEvt->m_id = (unsigned int)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+			pEvt->m_id = (unsigned int)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 2
 
 			for (int i = 0; i < 4; ++i)
 			{
-				signed int n = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+				signed int n = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor;  // Arg 3 - 6
 
 				if (n >= 0)
 				{
@@ -160,18 +160,18 @@ namespace CharacterControl {
 				}
 			}
 
-			pEvt->m_value = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+			pEvt->m_value = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 7
 
 			Vector3 pos, u, v, n;
-			pos.m_x =
-				pos.m_y = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor;
-			pos.m_z = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor;
+			pos.m_x = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 8
+			pos.m_y = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 9
+			pos.m_z = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 10
 
-			u.m_x = (float)lua_tonumber(luaVM, -numArgs--); u.m_y = (float)lua_tonumber(luaVM, -numArgs--); u.m_z = (float)lua_tonumber(luaVM, -numArgs--);
-			v.m_x = (float)lua_tonumber(luaVM, -numArgs--); v.m_y = (float)lua_tonumber(luaVM, -numArgs--); v.m_z = (float)lua_tonumber(luaVM, -numArgs--);
-			n.m_x = (float)lua_tonumber(luaVM, -numArgs--); n.m_y = (float)lua_tonumber(luaVM, -numArgs--); n.m_z = (float)lua_tonumber(luaVM, -numArgs--);
+			u.m_x = (float)lua_tonumber(luaVM, -numArgs--); u.m_y = (float)lua_tonumber(luaVM, -numArgs--); u.m_z = (float)lua_tonumber(luaVM, -numArgs--); // Arg 11 - 13
+			v.m_x = (float)lua_tonumber(luaVM, -numArgs--); v.m_y = (float)lua_tonumber(luaVM, -numArgs--); v.m_z = (float)lua_tonumber(luaVM, -numArgs--); // Arg 14 - 16
+			n.m_x = (float)lua_tonumber(luaVM, -numArgs--); n.m_y = (float)lua_tonumber(luaVM, -numArgs--); n.m_z = (float)lua_tonumber(luaVM, -numArgs--); // Arg 17 - 19
 
-			pEvt->m_peuuid = LuaGlue::readPEUUID(luaVM, -numArgs--);
+			pEvt->m_peuuid = LuaGlue::readPEUUID(luaVM, -numArgs--); // Arg 20
 
 			lua_pop(luaVM, numArgsConst); //Second arg is a count of how many to pop
 
