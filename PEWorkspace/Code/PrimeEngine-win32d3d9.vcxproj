@@ -1006,10 +1006,10 @@
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_normal.dds" />
     <None Include="..\AssetsOut\Vampire2\Textures\Vampire_specular.dds" />
     <None Include="navCell.lua">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </None>
     <None Include="navCell.py">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </None>
     <None Include="PrimeEngine\APIAbstraction\Effect\Effect.lua" />
     <None Include="PrimeEngine\Events\Component.lua" />

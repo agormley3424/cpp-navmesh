@@ -44,9 +44,13 @@ namespace CharacterControl {
 			unsigned int newID = newCell.getID();
 
 			cells.insert({ newID, newCell });
+			auto iter = cells.find(newID);
+			navCell* newAddress = &(iter->second);
 
 			// Add a new linked list for this cell
-			graph.insert({ newID, std::forward_list<navCell*>{&cells[newID]}});
+			std::forward_list<navCell*> newRow;
+			newRow.push_front(newAddress);
+			graph.insert({newID, newRow});
 
 			for (auto iter = graph.begin(); iter != graph.end(); iter++)
 			{
@@ -57,7 +61,7 @@ namespace CharacterControl {
 					std::forward_list<navCell*>& row = iter->second;
 
 					// Insert the new cell into the neighbor's row
-					row.insert_after(row.begin(), &cells[newID]);
+					row.insert_after(row.begin(), newAddress);
 
 					// Insert the neighbor into the new cell's row
 					graph[newID].insert_after(graph[newID].begin(), row.front());
@@ -84,13 +88,16 @@ namespace CharacterControl {
 
 			graph.erase(cellID);
 
+			auto iter = cells.find(cellID);
+			navCell* cellAddress = &(iter->second);
+
 			for (int row = 0; row < graph.size(); ++row)
 			{
 				for (auto col = graph[row].begin(); col != graph[row].end(); col++)
 				{
 					auto future = col;
 					future++;
-					if (future != graph[row].end() && *col == &cells[cellID])
+					if (future != graph[row].end() && *col == cellAddress)
 					{
 						graph[row].erase_after(col);
 
@@ -109,13 +116,17 @@ namespace CharacterControl {
 		// It might be more efficient to just check if a cell is blocked or not, rather than remove it from the entire graph...
 		void navMesh::blockCell(unsigned int cellID)
 		{
-			if (cells[cellID].isBlocked())
+			auto iter = cells.find(cellID);
+			navCell* cellAddress = &(iter->second);
+			navCell& cellProxy = iter->second;
+
+			if (cellProxy.isBlocked())
 			{
 				std::cerr << "navMesh.cpp: blockCell Error: Line 75: Attempt to block cell already blocked\n";
 				return;
 			}
 
-			cells[cellID].block();
+			cellProxy.block();
 
 			// Remove from the graph
 			// It's more efficient to compare IDs than whole objects
@@ -123,13 +134,15 @@ namespace CharacterControl {
 
 			graph.erase(cellID);
 
+
+
 			for (int row = 0; row < graph.size(); ++row)
 			{
 				for (auto col = graph[row].begin(); col != graph[row].end(); col++)
 				{
 					auto future = col;
 					future++;
-					if (future != graph[row].end() && *col== &cells[cellID])
+					if (future != graph[row].end() && *col== cellAddress)
 					{
 						graph[row].erase_after(col);
 
@@ -145,7 +158,17 @@ namespace CharacterControl {
 		// If this cell isn't in the cells array, it should throw an error
 		void navMesh::unblockCell(unsigned int cellID)
 		{
-			if (cells[cellID].isBlocked())
+			if (cells.find(cellID) == cells.end())
+			{
+				std::cerr << "navMesh.cpp: unblockCell Error: Line 163: Attempt to unblock cell not currently stored\n";
+				return;
+			}
+
+			auto iter = cells.find(cellID);
+			navCell* cellAddress = &(iter->second);
+			navCell& cellProxy = iter->second;
+
+			if (cellProxy.isBlocked())
 			{
 				std::cerr << "navMesh.cpp: unblockCell Error: Line 96: Attempt to unblock cell already unblocked\n";
 				return;
@@ -153,27 +176,25 @@ namespace CharacterControl {
 
 			// Else
 
-			cells[cellID].unBlock();
+			cellProxy.unBlock();
 
-			navCell& newCell = cells[cellID];
-			unsigned int newID = newCell.getID();
-
-			//cells.insert({ newID, newCell });
-			cells.insert({ newID, newCell });
+			unsigned int newID = cellProxy.getID();
 
 			// Add a new linked list for this cell
-			graph.insert({ newID, std::forward_list<navCell*>{&cells[newID]}});
+			std::forward_list<navCell*> newRow;
+			newRow.push_front(cellAddress);
+			graph.insert({ newID, newRow });
 
 			for (auto iter = graph.begin(); iter != graph.end(); iter++)
 			{
 				unsigned int graphID = iter->first;
 
-				if (newCell.hasNeighbor(graphID))
+				if (cellProxy.hasNeighbor(graphID))
 				{
 					std::forward_list<navCell*>& row = iter->second;
 
 					// Insert the new cell into the neighbor's row
-					row.insert_after(row.begin(), &cells[newID]);
+					row.insert_after(row.begin(), cellAddress);
 
 					// Insert the neighbor into the new cell's row
 					graph[newID].insert_after(graph[newID].begin(), row.front());
@@ -197,8 +218,10 @@ namespace CharacterControl {
 		// Returns the next navCell to be moved to
 		navCell* navMesh::aStar(unsigned int start, unsigned int end)
 		{
-			navCell& startCell = cells[start];
-			navCell& endCell = cells[end];
+			navCell& startCell = cells.find(start)->second;
+			navCell* startAddress = &startCell;
+			navCell& endCell = cells.find(end)->second;
+			navCell* endAddress = &endCell;
 
 			// Does A* update farthest known distance from the source like Dijkstra's, or nah?
 			// Doing that will necessitate modifying the fringe priority queue sometimes
@@ -220,7 +243,7 @@ namespace CharacterControl {
 
 			startCell.setStartDist(0);
 
-			fringe.push(&cells[start], startCell.getValue() + manhattan(startCell.getCenter(), endCell.getCenter()));
+			fringe.push(startAddress, startCell.getValue() + manhattan(startCell.getCenter(), endCell.getCenter()));
 
 			while (!fringe.isEmpty())
 			{
@@ -233,9 +256,10 @@ namespace CharacterControl {
 					return targetCell;
 				}
 
-				std::forward_list<navCell*>& row = graph[targetCell->getID()];
+				std::forward_list<navCell*>* row;
+				row = &(graph.find(targetCell->getID())->second);
 
-				for (auto iter = row.begin()++; iter != row.end(); iter++)
+				for (auto iter = row->begin()++; iter != row->end(); iter++)
 				{
 					navCell* neighbor = *iter;
 

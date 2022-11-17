@@ -1,19 +1,4 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
-  ClientGameObjectManagerAddon.cpp
-  GlobalRegistry.cpp
-  PriorityQueue.cpp
-  navCell.cpp
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(14): warning C4018: '<': signed/unsigned mismatch
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(19): warning C4018: '<': signed/unsigned mismatch
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(43): warning C4018: '<': signed/unsigned mismatch
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(53): warning C4018: '<': signed/unsigned mismatch
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(78): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(78): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(81): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navcell.cpp(151): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navcell.cpp(155): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\priorityqueue.cpp(83): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone\peworkspace\code\navcell.cpp(163): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 SoldierNPC.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   CharacterControl-win32d3d9.vcxproj -> C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\..\build\CharacterControl-win32d3d9.exe
   CharacterControl-win32d3d9.vcxproj -> ..\build\CharacterControl-win32d3d9.pdb (Full PDB)
