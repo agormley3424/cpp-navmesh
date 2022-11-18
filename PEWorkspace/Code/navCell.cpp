@@ -9,7 +9,7 @@ using namespace CharacterControl::Events;
 namespace CharacterControl {
 	namespace Components {
 
-		PE_IMPLEMENT_CLASS1(navCell, Component);
+		//PE_IMPLEMENT_CLASS1(navCell, Component);
 
 		//navCell::navCell(unsigned int ID, std::string SHAPE, signed int VALUE)
 		//{
@@ -90,21 +90,32 @@ namespace CharacterControl {
 
 
 
-		navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
-			: Component(context, arena, hMyself)
+		//navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
+		//	: Component(context, arena, hMyself)
+		//{
+		//	id = pEvt->m_id;
+
+		//	for (auto i = pEvt->m_neighbors.begin(); i != pEvt->m_neighbors.end(); i++)
+		//	{
+		//		neighbors.insert(*i);
+		//	}
+
+		//	m_base = pEvt->m_base;
+
+		//	shape = pEvt->m_shape;
+
+		//	value = pEvt->m_value;
+		//}
+
+
+		navCell::navCell(unsigned int ID, std::string SHAPE, Vector3 CENTER, signed int VALUE,
+			std::unordered_set<unsigned int> NEIGHBORS)
 		{
-			id = pEvt->m_id;
-
-			for (auto i = pEvt->m_neighbors.begin(); i != pEvt->m_neighbors.end(); i++)
-			{
-				neighbors.insert(*i);
-			}
-
-			m_base = pEvt->m_base;
-
-			shape = pEvt->m_shape;
-
-			value = pEvt->m_value;
+			id = ID;
+			shape = SHAPE;
+			center = CENTER;
+			value = VALUE;
+			neighbors = NEIGHBORS;
 		}
 
 		//navCell::navCell()
@@ -112,12 +123,12 @@ namespace CharacterControl {
 		//	std::cerr << "The default constructor for navCell is being called. This shouldn't be happening!\n";
 		//}
 
-		void navCell::addDefaultComponents()
-		{
-			Component::addDefaultComponents();
+		//void navCell::addDefaultComponents()
+		//{
+		//	Component::addDefaultComponents();
 
-			// custom methods of this component
-		}
+		//	// custom methods of this component
+		//}
 
 	}
 	namespace Events {

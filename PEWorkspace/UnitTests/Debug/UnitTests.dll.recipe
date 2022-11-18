@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\Debug\UnitTests.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs>
+    <NonRecipeFileRef>
+      <FullPath>C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\CharacterControl-win32d3d9.vcxproj</FullPath>
+    </NonRecipeFileRef>
+    <NonRecipeFileRef>
+      <FullPath>C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\luasocket_dist-win32d3d9.vcxproj</FullPath>
+    </NonRecipeFileRef>
+    <NonRecipeFileRef>
+      <FullPath>C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\lua_dist-win32d3d9.vcxproj</FullPath>
+    </NonRecipeFileRef>
+    <NonRecipeFileRef>
+      <FullPath>C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone\PEWorkspace\Code\PrimeEngine-win32d3d9.vcxproj</FullPath>
+    </NonRecipeFileRef>
+  </NonRecipeFileRefs>
+</Project>

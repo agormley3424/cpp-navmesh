@@ -8,6 +8,9 @@
 namespace CharacterControl {
 	namespace Components {
 
+		std::unordered_map<unsigned int, std::forward_list<navCell*>> navMesh::graph = {};
+		std::unordered_map<unsigned int, navCell> navMesh::cells = {};
+
 		const std::unordered_map<unsigned int, std::forward_list<navCell*>>& navMesh::getGraph()
 		{
 			return graph;
@@ -91,15 +94,16 @@ namespace CharacterControl {
 			auto iter = cells.find(cellID);
 			navCell* cellAddress = &(iter->second);
 
-			for (int row = 0; row < graph.size(); ++row)
+			for (auto row = graph.begin(); row != graph.end(); row++)
 			{
-				for (auto col = graph[row].begin(); col != graph[row].end(); col++)
+				std::forward_list<navCell*>& listProxy = row->second;
+				for (auto col = listProxy.begin(); col != listProxy.end(); col++)
 				{
 					auto future = col;
 					future++;
-					if (future != graph[row].end() && *col == cellAddress)
+					if (future != listProxy.end() && *future == cellAddress)
 					{
-						graph[row].erase_after(col);
+						listProxy.erase_after(col);
 
 						// A particular node should only ever be a neighbor of another node once, so I can break early
 						break;
@@ -136,15 +140,16 @@ namespace CharacterControl {
 
 
 
-			for (int row = 0; row < graph.size(); ++row)
+			for (auto row = graph.begin(); row != graph.end(); row++)
 			{
-				for (auto col = graph[row].begin(); col != graph[row].end(); col++)
+				std::forward_list<navCell*>& listProxy = row->second;
+				for (auto col = listProxy.begin(); col != listProxy.end(); col++)
 				{
 					auto future = col;
 					future++;
-					if (future != graph[row].end() && *col== cellAddress)
+					if (future != listProxy.end() && *future == cellAddress)
 					{
-						graph[row].erase_after(col);
+						listProxy.erase_after(col);
 
 						// A particular node should only ever be a neighbor of another node once, so I can break early
 						break;
@@ -215,6 +220,28 @@ namespace CharacterControl {
 			return manSum;
 		}
 
+		void navMesh::printCells()
+		{
+			for (auto iter = cells.begin(); iter != cells.end(); iter++)
+			{
+				std::cerr << iter->second.getID() << ", ";
+			}
+
+			std::cerr << std::endl;
+		}
+
+		void navMesh::printGraph()
+		{
+			for (auto row = graph.begin(); row != graph.end(); row++)
+			{
+				for (auto col = row->second.begin(); col != row->second.end(); col++)
+				{
+					std::cerr << (*col)->getID() << ", ";
+				}
+				std::cerr << std::endl;
+			}
+		}
+
 		// Returns the next navCell to be moved to
 		navCell* navMesh::aStar(unsigned int start, unsigned int end)
 		{
@@ -222,6 +249,11 @@ namespace CharacterControl {
 			navCell* startAddress = &startCell;
 			navCell& endCell = cells.find(end)->second;
 			navCell* endAddress = &endCell;
+
+			if (start == end)
+			{
+				return startAddress;
+			}
 
 			// Does A* update farthest known distance from the source like Dijkstra's, or nah?
 			// Doing that will necessitate modifying the fringe priority queue sometimes
@@ -244,6 +276,7 @@ namespace CharacterControl {
 			startCell.setStartDist(0);
 
 			fringe.push(startAddress, startCell.getValue() + manhattan(startCell.getCenter(), endCell.getCenter()));
+			discovered.insert(start);
 
 			while (!fringe.isEmpty())
 			{
@@ -252,14 +285,20 @@ namespace CharacterControl {
 
 				if (targetCell->getID() == end)
 				{
-					targetCell->setParent(targetCell);
+					while (targetCell->getParent() != startAddress)
+					{
+						targetCell = targetCell->getParent();
+					}
+
 					return targetCell;
 				}
 
 				std::forward_list<navCell*>* row;
 				row = &(graph.find(targetCell->getID())->second);
+				auto iter = row->begin();
+				iter++;
 
-				for (auto iter = row->begin()++; iter != row->end(); iter++)
+				for (; iter != row->end(); iter++)
 				{
 					navCell* neighbor = *iter;
 
@@ -271,6 +310,7 @@ namespace CharacterControl {
 						fringe.push(neighbor, neighbor->getValue() + manhattan(neighbor->getCenter(), endCell.getCenter()));
 
 						neighbor->setParent(targetCell);
+						discovered.insert(neighbor->getID());
 					}
 					// Else, update its value in the fringe (might not be necessary?)
 					// I'll definitely need my own data structure to do this

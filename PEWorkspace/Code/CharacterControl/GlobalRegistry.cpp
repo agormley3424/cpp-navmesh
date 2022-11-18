@@ -41,7 +41,7 @@ void CharacterControl::Register(PE::Components::LuaEnvironment *pLuaEnv, PE::Glo
 			// start root.CharacterControl.Components
 			{
 				WayPoint::InitializeAndRegister(pLuaEnv, pRegistry, setLuaMetaDataOnly);
-				navCell::InitializeAndRegister(pLuaEnv, pRegistry, setLuaMetaDataOnly);
+				//navCell::InitializeAndRegister(pLuaEnv, pRegistry, setLuaMetaDataOnly);
 				SoldierNPC::InitializeAndRegister(pLuaEnv, pRegistry, setLuaMetaDataOnly);
 				SoldierNPCAnimationSM::InitializeAndRegister(pLuaEnv, pRegistry, setLuaMetaDataOnly);
 				SoldierNPCMovementSM::InitializeAndRegister(pLuaEnv, pRegistry, setLuaMetaDataOnly);

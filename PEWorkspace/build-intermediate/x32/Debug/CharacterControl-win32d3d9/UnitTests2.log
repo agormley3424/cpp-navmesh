@@ -1,0 +1,9 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2066,5): warning : The referenced project 'lua_dist-win32d3d9.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2066,5): warning : The referenced project 'luasocket_dist-win32d3d9.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2066,5): warning : The referenced project 'PrimeEngine-win32d3d9.vcxproj' does not exist.
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (..\build-intermediate\x32\Debug\CharacterControl-win32d3d9\) contains files shared from another project (CharacterControl-win32d3d9.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
+  pch.cpp
+  UnitTests.cpp
+pch.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+LINK : fatal error LNK1104: cannot open file 'Microsoft.VisualStudio.TestTools.CppUnitTestFramework.lib'

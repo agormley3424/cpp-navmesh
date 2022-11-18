@@ -35,13 +35,16 @@ namespace CharacterControl {
 	}
 	namespace Components {
 
-		struct navCell : public PE::Components::Component {
+		struct navCell { //: public PE::Components::Component {
 
-			PE_DECLARE_CLASS(navCell);
+			//PE_DECLARE_CLASS(navCell);
 
-			navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt);
+			//navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt);
 
-			virtual void addDefaultComponents();
+			navCell::navCell(unsigned int ID, std::string SHAPE, Vector3 CENTER, signed int VALUE,
+				std::unordered_set<unsigned int> NEIGHBORS);
+
+			//virtual void addDefaultComponents();
 
 			unsigned int getID();
 
