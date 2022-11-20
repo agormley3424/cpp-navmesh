@@ -65,8 +65,13 @@ void SoldierNPCBehaviorSM::do_SoldierNPCMovementSM_Event_TARGET_REACHED(PE::Even
 
 	if (m_state == PATROLLING_WAYPOINTS)
 	{
+		SoldierNPC* pSol = getFirstParentByTypePtr<SoldierNPC>();
+		PE::Handle hSoldierSceneNode = pSol->getFirstComponentHandle<PE::Components::SceneNode>();
+		Matrix4x4 base = hSoldierSceneNode.getObject<PE::Components::SceneNode>()->m_worldTransform;
+
 		// have next waypoint to go to
-		Vector3 pWP = navMesh::aStar();
+		outside = false;
+		Vector3 pWP = navMesh::aStar(base.getPos(), outside);
 
 		m_curPatrolPos = pWP;
 
@@ -143,7 +148,7 @@ void SoldierNPCBehaviorSM::do_PRE_RENDER_needsRC(PE::Events::Event *pEvt)
 			//we can also construct points ourself
 			bool sent = false;
 				//WayPoint *pWP = pGameObjectManagerAddon->getWayPoint(m_curPatrolWayPoint);
-			Vector3 pWP = navMesh::aStar();
+			Vector3 pWP = navMesh::aStar(base.getPos(), outside);
 				//if (pWP)
 				Vector3 target = pWP;
 				Vector3 pos = base.getPos();
@@ -204,7 +209,11 @@ void SoldierNPCBehaviorSM::do_UPDATE(PE::Events::Event* pEvt)
 		{
 			// search for waypoint object
 			//WayPoint *pWP = pGameObjectManagerAddon->getWayPoint(m_curPatrolWayPoint);
-			Vector3 pWP = navMesh::aStar();
+			SoldierNPC* pSol = getFirstParentByTypePtr<SoldierNPC>();
+			PE::Handle hSoldierSceneNode = pSol->getFirstComponentHandle<PE::Components::SceneNode>();
+			Matrix4x4 base = hSoldierSceneNode.getObject<PE::Components::SceneNode>()->m_worldTransform;
+
+			Vector3 pWP = navMesh::aStar(base.getPos(), outside);
 			m_state = PATROLLING_WAYPOINTS;
 			PE::Handle h("SoldierNPCMovementSM_Event_MOVE_TO", sizeof(SoldierNPCMovementSM_Event_MOVE_TO));
 			Events::SoldierNPCMovementSM_Event_MOVE_TO* pEvt = new(h) SoldierNPCMovementSM_Event_MOVE_TO(pWP);

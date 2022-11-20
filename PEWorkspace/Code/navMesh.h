@@ -50,6 +50,9 @@ namespace CharacterControl {
 			// Run A* with default values
 			static Vector3 aStar();
 
+			// Run A* with a default end, and a start position closest to the soldier
+			static Vector3 aStar(Vector3 soldierPos, bool outside);
+
 
 		private:
 			// I could make this even more efficient by storing the graph as a forward list of forward lists, but I don't wanna deal with the iterators...

@@ -255,6 +255,38 @@ namespace CharacterControl {
 			return aStar(*defaultStart, *defaultEnd);
 		}
 
+		Vector3 navMesh::aStar(Vector3 soldierPos, bool outside)
+		{
+			if (outside)
+			{
+				return cells.find(*defaultStart)->second.getCenter();
+			}
+			// else
+
+			navCell* nearest = nullptr;
+			double minDist = std::numeric_limits<double>::max();
+			for (auto iter = cells.begin(); iter != cells.end(); iter++)
+			{
+				double tempDist = (soldierPos - (iter->second.getCenter())).length();
+				if (tempDist - minDist < std::numeric_limits<double>::epsilon())
+				{
+					nearest = &(iter->second);
+					minDist = tempDist;
+				}
+			}
+
+			assert(nearest != nullptr);
+
+			if (minDist - 1 > std::numeric_limits<double>::epsilon())
+			{
+				return aStar(*defaultStart, *defaultEnd);
+			}
+			else
+			{
+				return aStar(nearest->getID(), *defaultEnd);
+			}
+		}
+
 		// Returns the next navCell to be moved to
 		Vector3 navMesh::aStar(unsigned int start, unsigned int end)
 		{
