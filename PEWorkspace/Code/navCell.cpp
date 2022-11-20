@@ -88,8 +88,6 @@ namespace CharacterControl {
 			return parent;
 		}
 
-
-
 		//navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
 		//	: Component(context, arena, hMyself)
 		//{

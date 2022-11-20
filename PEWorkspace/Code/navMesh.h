@@ -32,8 +32,8 @@ namespace CharacterControl {
 			// If this cell isn't in the cells array, it should throw an error
 			static void unblockCell(unsigned int cellID);
 
-			// Returns the next navCell to be moved to
-			static navCell* aStar(unsigned int start, unsigned int end);
+			// Returns the center of the next navCell to be moved to
+			static Vector3 aStar(unsigned int start, unsigned int end);
 
 			// Returns the manhattan distance between two vectors
 			static float manhattan(Vector3 vec1, Vector3 vec2);
@@ -44,6 +44,12 @@ namespace CharacterControl {
 			// Output the graph
 			static void printGraph();
 
+			// Add default values for the A* execution
+			static void setDefaults(unsigned int start, unsigned int end);
+
+			// Run A* with default values
+			static Vector3 aStar();
+
 
 		private:
 			// I could make this even more efficient by storing the graph as a forward list of forward lists, but I don't wanna deal with the iterators...
@@ -52,6 +58,8 @@ namespace CharacterControl {
 
 			static void addToGraph(navCell& newCell);
 			static void removeFromGraph(unsigned int ID);
+			static unsigned int* defaultStart;
+			static unsigned int* defaultEnd;
 		};
 	}
 }

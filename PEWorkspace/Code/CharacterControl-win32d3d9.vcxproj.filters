@@ -52,6 +52,7 @@
     <ClInclude Include="navCell.h" />
     <ClInclude Include="navMesh.h" />
     <ClInclude Include="PriorityQueue.h" />
+    <ClInclude Include="PayWoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharacterControl\Characters\SoldierNPC.cpp">
@@ -89,6 +90,7 @@
     <ClCompile Include="navCell.cpp" />
     <ClCompile Include="navMesh.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
+    <ClCompile Include="PayWoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Masm Include="CharacterControl\test.asm" />

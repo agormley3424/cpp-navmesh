@@ -46,6 +46,7 @@ struct SoldierNPCBehaviorSM : public PE::Components::Component
 
 	bool m_havePatrolWayPoint;
 	char m_curPatrolWayPoint[32];
+	Vector3 m_curPatrolPos;
 	States m_state;
 };
 

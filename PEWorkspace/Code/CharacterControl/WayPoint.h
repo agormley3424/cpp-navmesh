@@ -17,6 +17,9 @@ struct Event_CREATE_WAYPOINT : public PE::Events::Event
 	// Lua interface prefixed with l_
 	static int l_Construct(lua_State* luaVM);
 
+	//Event_CREATE_WAYPOINT(std::string name, std::string nextWayPointName, Vector3 pos, Vector3 u, Vector3 v, Vector3 n,
+	//	PEUUID peuuid);
+
 	Matrix4x4 m_base;
 	char m_name[32];
 	char m_nextWaypointName[32];
@@ -31,6 +34,8 @@ struct WayPoint : public PE::Components::Component
 	PE_DECLARE_CLASS(WayPoint);
 
 	WayPoint( PE::GameContext &context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_WAYPOINT *pEvt);
+
+	//WayPoint(Vector3 u, Vector3 v, Vector3 n, Vector3 pos, char* name, char* nextWayPointName);
 
 	virtual void addDefaultComponents() ;
 

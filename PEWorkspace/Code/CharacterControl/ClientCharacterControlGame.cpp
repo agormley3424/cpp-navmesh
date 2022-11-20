@@ -231,8 +231,18 @@ int ClientCharacterControlGame::initGame()
 		navCell n3(3, "Rectangle", Vector3(0, 0, 2), 0, { 2, 4 });
 		navCell n4(4, "Rectangle", Vector3(-1, 0, 2), 0, { 3 });
 
-		//std::cout << "cout: Beginning print for navMesh debugging\n";
-		std::cerr << "cerr: Beginning print for navMesh debugging\n";
+		unsigned int startCell;
+		unsigned int endCell;
+
+		std::cout << "Please, enter the starting cell\n";
+
+		std::cin >> startCell;
+
+		std::cout << "Please, enter the ending cell\n";
+
+		std::cin >> endCell;
+
+		navMesh::setDefaults(startCell, endCell);
 
 		navMesh::addCell(n2);
 		navMesh::addCell(n1);

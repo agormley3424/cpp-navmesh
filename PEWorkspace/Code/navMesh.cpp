@@ -10,6 +10,8 @@ namespace CharacterControl {
 
 		std::unordered_map<unsigned int, std::forward_list<navCell*>> navMesh::graph = {};
 		std::unordered_map<unsigned int, navCell> navMesh::cells = {};
+		unsigned int* navMesh::defaultStart = new unsigned int(0);
+		unsigned int* navMesh::defaultEnd = new unsigned int(0);
 
 		const std::unordered_map<unsigned int, std::forward_list<navCell*>>& navMesh::getGraph()
 		{
@@ -242,8 +244,19 @@ namespace CharacterControl {
 			}
 		}
 
+		void navMesh::setDefaults(unsigned int start, unsigned int end)
+		{
+			*defaultStart = start;
+			*defaultEnd = end;
+		}
+
+		Vector3 navMesh::aStar()
+		{
+			return aStar(*defaultStart, *defaultEnd);
+		}
+
 		// Returns the next navCell to be moved to
-		navCell* navMesh::aStar(unsigned int start, unsigned int end)
+		Vector3 navMesh::aStar(unsigned int start, unsigned int end)
 		{
 			navCell& startCell = cells.find(start)->second;
 			navCell* startAddress = &startCell;
@@ -252,7 +265,7 @@ namespace CharacterControl {
 
 			if (start == end)
 			{
-				return startAddress;
+				return startCell.getCenter();
 			}
 
 			// Does A* update farthest known distance from the source like Dijkstra's, or nah?
@@ -290,7 +303,7 @@ namespace CharacterControl {
 						targetCell = targetCell->getParent();
 					}
 
-					return targetCell;
+					return targetCell->getCenter();
 				}
 
 				std::forward_list<navCell*>* row;
@@ -326,7 +339,7 @@ namespace CharacterControl {
 			}
 
 			// If nothing has been returned yet, something has gone wrong
-			return nullptr;
+			return Vector3(-1, -1, -1);
 		}
 	}
 }
