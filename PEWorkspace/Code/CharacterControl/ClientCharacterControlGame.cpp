@@ -222,38 +222,38 @@ int ClientCharacterControlGame::initGame()
         }
     }
 
-	bool defaultNavMesh = true;
+	bool defaultNavMesh = false;
 
 	if (defaultNavMesh)
 	{
-		navCell n1(1, "Rectangle", Vector3(0, 0, 0), 0, { 2 });
-		navCell n2(2, "Rectangle", Vector3(0, 0, 1), 0, { 1, 3 });
-		navCell n3(3, "Rectangle", Vector3(0, 0, 2), 0, { 2, 4 });
-		navCell n4(4, "Rectangle", Vector3(-1, 0, 2), 0, { 3 });
+		//navCell n1(1, "Rectangle", Vector3(0, 0, 0), 0, { 2 });
+		//navCell n2(2, "Rectangle", Vector3(0, 0, 1), 0, { 1, 3 });
+		//navCell n3(3, "Rectangle", Vector3(0, 0, 2), 0, { 2, 4 });
+		//navCell n4(4, "Rectangle", Vector3(-1, 0, 2), 0, { 3 });
 
-		unsigned int startCell;
-		unsigned int endCell;
+		//unsigned int startCell;
+		//unsigned int endCell;
 
-		std::cout << "Please, enter the starting cell\n";
+		//std::cout << "Please, enter the starting cell\n";
 
-		std::cin >> startCell;
+		//std::cin >> startCell;
 
-		std::cout << "Please, enter the ending cell\n";
+		//std::cout << "Please, enter the ending cell\n";
 
-		std::cin >> endCell;
+		//std::cin >> endCell;
 
-		navMesh::setDefaults(startCell, endCell);
+		//navMesh::setDefaults(startCell, endCell);
 
-		navMesh::addCell(n2);
-		navMesh::addCell(n1);
-		navMesh::addCell(n3);
-		navMesh::addCell(n4);
+		//navMesh::addCell(n2);
+		//navMesh::addCell(n1);
+		//navMesh::addCell(n3);
+		//navMesh::addCell(n4);
 
-		std::cerr << "Printing cells: \n";
-		navMesh::printCells();
+		//std::cerr << "Printing cells: \n";
+		//navMesh::printCells();
 
-		std::cerr << "Printing adjacency list: \n";
-		navMesh::printGraph();
+		//std::cerr << "Printing adjacency list: \n";
+		//navMesh::printGraph();
 		
 		//navCell* result = navMesh::aStar(n1.getID(), n3.getID());
 		//std::cerr << "Astar search from " << n1.getID() << " to " << n3.getID() << ": ";

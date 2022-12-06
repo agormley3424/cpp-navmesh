@@ -11,13 +11,13 @@ function fillMetaInfoTable(args) -- the script fromat requires existance of this
 args['myScript']="navCell.lua"
 args['myScriptPackage']="CharacterControl"
 
+args['shape'] = 'rectangle'
 args['id'] = ''
 args['neighbor1'] = '-1'
 args['neighbor2'] = '-1'
 args['neighbor3'] = '-1'
 args['neighbor4'] = '-1'
 args['value'] = '0'
-args['shape'] = 'rectangle'
 
 
 end -- required

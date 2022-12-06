@@ -83,11 +83,8 @@ void SoldierNPCBehaviorSM::do_SoldierNPCMovementSM_Event_TARGET_REACHED(PE::Even
 		// release memory now that event is processed
 		h.release();
 
-			//else
-			//{
-			//	m_state = IDLE;
-			//	// no need to send the event. movement state machine will automatically send event to animation state machine to play idle animation
-			//}
+			//m_state = IDLE;
+			// no need to send the event. movement state machine will automatically send event to animation state machine to play idle animation
 	}
 }
 

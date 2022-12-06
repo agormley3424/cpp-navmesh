@@ -9,7 +9,7 @@ using namespace CharacterControl::Events;
 namespace CharacterControl {
 	namespace Components {
 
-		//PE_IMPLEMENT_CLASS1(navCell, Component);
+		PE_IMPLEMENT_CLASS1(navCell, Component);
 
 		//navCell::navCell(unsigned int ID, std::string SHAPE, signed int VALUE)
 		//{
@@ -88,33 +88,40 @@ namespace CharacterControl {
 			return parent;
 		}
 
-		//navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
-		//	: Component(context, arena, hMyself)
-		//{
-		//	id = pEvt->m_id;
-
-		//	for (auto i = pEvt->m_neighbors.begin(); i != pEvt->m_neighbors.end(); i++)
-		//	{
-		//		neighbors.insert(*i);
-		//	}
-
-		//	m_base = pEvt->m_base;
-
-		//	shape = pEvt->m_shape;
-
-		//	value = pEvt->m_value;
-		//}
-
-
-		navCell::navCell(unsigned int ID, std::string SHAPE, Vector3 CENTER, signed int VALUE,
-			std::unordered_set<unsigned int> NEIGHBORS)
+		navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
+			: Component(context, arena, hMyself)
 		{
-			id = ID;
-			shape = SHAPE;
-			center = CENTER;
-			value = VALUE;
-			neighbors = NEIGHBORS;
+			//id = pEvt->m_id;
+
+			//for (auto i = pEvt->m_neighbors.begin(); i != pEvt->m_neighbors.end(); i++)
+			//{
+			//	neighbors.insert(*i);
+			//}
+
+			m_base = pEvt->m_base;
+			center = pEvt->m_base.getPos();
+			neighbors = pEvt->m_neighbors;
+			shape = pEvt->m_shape;
+			id = pEvt->m_id;
+			value = pEvt->m_value;
 		}
+
+		void navCell::addDefaultComponents()
+		{
+			Component::addDefaultComponents();
+
+			// custom methods of this component
+		}
+
+		//navCell::navCell(unsigned int ID, std::string SHAPE, Vector3 CENTER, signed int VALUE,
+		//	std::unordered_set<unsigned int> NEIGHBORS)
+		//{
+		//	id = ID;
+		//	shape = SHAPE;
+		//	center = CENTER;
+		//	value = VALUE;
+		//	neighbors = NEIGHBORS;
+		//}
 
 		//navCell::navCell()
 		//{
@@ -157,11 +164,11 @@ namespace CharacterControl {
 
 			float positionFactor = 1.0f / 100.0f;
 
-			pEvt->m_id = (unsigned int)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 2
+			pEvt->m_id = (unsigned int)lua_tonumber(luaVM, -numArgs--); // Arg 2
 
 			for (int i = 0; i < 4; ++i)
 			{
-				signed int n = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor;  // Arg 3 - 6
+				signed int n = (signed int)lua_tonumber(luaVM, -numArgs--);  // Arg 3 - 6
 
 				if (n >= 0)
 				{
@@ -169,7 +176,7 @@ namespace CharacterControl {
 				}
 			}
 
-			pEvt->m_value = (signed int)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 7
+			pEvt->m_value = (signed int)lua_tonumber(luaVM, -numArgs--); // Arg 7
 
 			Vector3 pos, u, v, n;
 			pos.m_x = (float)lua_tonumber(luaVM, -numArgs--) * positionFactor; // Arg 8

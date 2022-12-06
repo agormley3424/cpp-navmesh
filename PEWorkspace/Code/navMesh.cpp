@@ -10,8 +10,8 @@ namespace CharacterControl {
 
 		std::unordered_map<unsigned int, std::forward_list<navCell*>> navMesh::graph = {};
 		std::unordered_map<unsigned int, navCell> navMesh::cells = {};
-		unsigned int* navMesh::defaultStart = new unsigned int(0);
-		unsigned int* navMesh::defaultEnd = new unsigned int(0);
+		unsigned int* navMesh::defaultStart = new unsigned int(1);
+		unsigned int* navMesh::defaultEnd = new unsigned int(4);
 
 		const std::unordered_map<unsigned int, std::forward_list<navCell*>>& navMesh::getGraph()
 		{

@@ -7,6 +7,7 @@
 #include "navCell.h"
 #include "Tank/ClientTank.h"
 #include "CharacterControl/Client/ClientSpaceShip.h"
+#include "navMesh.h"
 
 using namespace PE::Components;
 using namespace PE::Events;
@@ -24,7 +25,7 @@ void ClientGameObjectManagerAddon::addDefaultComponents()
 
 	PE_REGISTER_EVENT_HANDLER(Event_CreateSoldierNPC, ClientGameObjectManagerAddon::do_CreateSoldierNPC);
 	PE_REGISTER_EVENT_HANDLER(Event_CREATE_WAYPOINT, ClientGameObjectManagerAddon::do_CREATE_WAYPOINT);
-	//PE_REGISTER_EVENT_HANDLER(Event_CREATE_NAVCELL, ClientGameObjectManagerAddon::do_CREATE_NAVCELL);
+	PE_REGISTER_EVENT_HANDLER(Event_CREATE_NAVCELL, ClientGameObjectManagerAddon::do_CREATE_NAVCELL);
 
 	// note this component (game obj addon) is added to game object manager after network manager, so network manager will process this event first
 	PE_REGISTER_EVENT_HANDLER(PE::Events::Event_SERVER_CLIENT_CONNECTION_ACK, ClientGameObjectManagerAddon::do_SERVER_CLIENT_CONNECTION_ACK);
@@ -85,20 +86,28 @@ void ClientGameObjectManagerAddon::do_CREATE_WAYPOINT(PE::Events::Event *pEvt)
 	addComponent(hWayPoint);
 }
 
-//void ClientGameObjectManagerAddon::do_CREATE_NAVCELL(PE::Events::Event* pEvt)
-//{
-//	PEINFO("GameObjectManagerAddon::do_CREATE_NAVCELL()\n");
-//
-//	assert(pEvt->isInstanceOf<Event_CREATE_NAVCELL>());
-//
-//	Event_CREATE_NAVCELL* pTrueEvent = (Event_CREATE_NAVCELL*)(pEvt);
-//
-//	PE::Handle hnavCell("navCell", sizeof(navCell));
-//	navCell* pnavCell = new(hnavCell) navCell(*m_pContext, m_arena, hnavCell, pTrueEvent);
-//	pnavCell->addDefaultComponents();
-//
-//	addComponent(hnavCell);
-//}
+void ClientGameObjectManagerAddon::do_CREATE_NAVCELL(PE::Events::Event* pEvt)
+{
+	PEINFO("GameObjectManagerAddon::do_CREATE_NAVCELL()\n");
+
+	assert(pEvt->isInstanceOf<Event_CREATE_NAVCELL>());
+
+	Event_CREATE_NAVCELL* pTrueEvent = (Event_CREATE_NAVCELL*)(pEvt);
+
+	PE::Handle hnavCell("navCell", sizeof(navCell));
+	navCell* pnavCell = new(hnavCell) navCell(*m_pContext, m_arena, hnavCell, pTrueEvent);
+	pnavCell->addDefaultComponents();
+
+	//pnavCell->center = pTrueEvent->m_base.getPos();
+	//pnavCell->neighbors = pTrueEvent->m_neighbors;
+	//pnavCell->shape = pTrueEvent->m_shape;
+	//pnavCell->id = pTrueEvent->m_id;
+	//pnavCell->value = pTrueEvent->m_value;
+
+	addComponent(hnavCell);
+
+	navMesh::addCell(*pnavCell);
+}
 
 WayPoint *ClientGameObjectManagerAddon::getWayPoint(const char *name)
 {

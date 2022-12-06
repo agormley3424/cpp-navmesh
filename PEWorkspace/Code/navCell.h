@@ -25,7 +25,7 @@ namespace CharacterControl {
 
 			Matrix4x4 m_base;
 			unsigned int m_id;
-			std::unordered_set<signed int> m_neighbors;
+			std::unordered_set<unsigned int> m_neighbors;
 			signed int m_value;
 			std::string m_shape;
 
@@ -35,16 +35,16 @@ namespace CharacterControl {
 	}
 	namespace Components {
 
-		struct navCell { //: public PE::Components::Component {
+		struct navCell : public PE::Components::Component { //: public PE::Components::Component {
 
-			//PE_DECLARE_CLASS(navCell);
+			PE_DECLARE_CLASS(navCell);
 
-			//navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt);
+			navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt);
 
-			navCell::navCell(unsigned int ID, std::string SHAPE, Vector3 CENTER, signed int VALUE,
-				std::unordered_set<unsigned int> NEIGHBORS);
+			//navCell::navCell(unsigned int ID, std::string SHAPE, Vector3 CENTER, signed int VALUE,
+			//	std::unordered_set<unsigned int> NEIGHBORS);
 
-			//virtual void addDefaultComponents();
+			virtual void addDefaultComponents();
 
 			unsigned int getID();
 
