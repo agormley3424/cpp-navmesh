@@ -4,6 +4,7 @@
 #include "navCell.h"
 #include <queue>
 #include "PriorityQueue.h"
+#include "CharacterControl/Characters/SoldierNPC.h"
 
 namespace CharacterControl {
 	namespace Components {
@@ -250,40 +251,83 @@ namespace CharacterControl {
 			*defaultEnd = end;
 		}
 
+		// Returns true if pos is equal to the position of the end mesh's center
+		bool navMesh::finished(Vector3 pos)
+		{
+			navCell& endCell = cells.find(*defaultEnd)->second;
+
+			return endCell.getCenter() == pos;
+		}
+
 		Vector3 navMesh::aStar()
 		{
 			return aStar(*defaultStart, *defaultEnd);
 		}
 
-		Vector3 navMesh::aStar(Vector3 soldierPos, bool outside)
+		//Vector3 navMesh::aStar(Vector3 soldierPos, bool outside, SoldierNPC* sNPC)
+		//{
+		//	if (outside)
+		//	{
+		//		return cells.find(sNPC->startCell)->second.getCenter();
+		//	}
+		//	// else
+
+		//	navCell* nearest = nullptr;
+		//	double minDist = std::numeric_limits<double>::max();
+		//	for (auto iter = cells.begin(); iter != cells.end(); iter++)
+		//	{
+		//		double tempDist = (soldierPos - (iter->second.getCenter())).length();
+		//		if (tempDist - minDist < std::numeric_limits<double>::epsilon())
+		//		{
+		//			nearest = &(iter->second);
+		//			minDist = tempDist;
+		//		}
+		//	}
+
+		//	assert(nearest != nullptr);
+
+		//	if (minDist - 1 > std::numeric_limits<double>::epsilon())
+		//	{
+		//		return aStar(sNPC->startCell, sNPC->endCell);
+		//	}
+		//	else
+		//	{
+		//		return aStar(nearest->getID(), sNPC->endCell);
+		//	}
+		//}
+
+		Vector3 navMesh::aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC)
 		{
 			if (outside)
 			{
-				return cells.find(*defaultStart)->second.getCenter();
-			}
-			// else
-
-			navCell* nearest = nullptr;
-			double minDist = std::numeric_limits<double>::max();
-			for (auto iter = cells.begin(); iter != cells.end(); iter++)
-			{
-				double tempDist = (soldierPos - (iter->second.getCenter())).length();
-				if (tempDist - minDist < std::numeric_limits<double>::epsilon())
+				navCell* nearest = nullptr;
+				double minDist = std::numeric_limits<double>::max();
+				for (auto iter = cells.begin(); iter != cells.end(); iter++)
 				{
-					nearest = &(iter->second);
-					minDist = tempDist;
+					double tempDist = (soldierPos - (iter->second.getCenter())).length();
+					if (tempDist - minDist < std::numeric_limits<double>::epsilon())
+					{
+						nearest = &(iter->second);
+						minDist = tempDist;
+					}
 				}
-			}
 
-			assert(nearest != nullptr);
+				assert(nearest != nullptr);
 
-			if (minDist - 1 > std::numeric_limits<double>::epsilon())
-			{
-				return aStar(*defaultStart, *defaultEnd);
+				if (abs(minDist - 1) > std::numeric_limits<double>::epsilon())
+				{
+					outside = false;
+					sNPC->startCell = nearest->getID();
+					return aStar(sNPC->startCell, sNPC->endCell);
+				}
+				else
+				{
+					return aStar(nearest->getID(), nearest->getID());
+				}
 			}
 			else
 			{
-				return aStar(nearest->getID(), *defaultEnd);
+				return aStar(sNPC->startCell, sNPC->endCell);
 			}
 		}
 

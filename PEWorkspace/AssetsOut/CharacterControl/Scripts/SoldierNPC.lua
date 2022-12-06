@@ -17,7 +17,10 @@ function runScript(args)
     local v = args['base']['v']
     local n = args['base']['n']
     evt = root.CharacterControl.Events.Event_CreateSoldierNPC.Construct(l_getGameContext(),
-        args['skinName'], args['skinPackage'], 
+       
+    args['startCell'], args['endCell'],
+    args['cycle'],args['hostility'],
+    args['skinName'], args['skinPackage'], 
         args['gunMeshName'], args['gunMeshPackage'],
         pos[1], pos[2], pos[3],
         u[1], u[2], u[3],

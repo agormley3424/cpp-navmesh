@@ -5,6 +5,8 @@
 #include <forward_list>
 #include <unordered_map>
 #include "navCell.h"
+#include "CharacterControl/Characters/SoldierNPC.h"
+
 
 namespace CharacterControl {
 	namespace Components {
@@ -51,7 +53,10 @@ namespace CharacterControl {
 			static Vector3 aStar();
 
 			// Run A* with a default end, and a start position closest to the soldier
-			static Vector3 aStar(Vector3 soldierPos, bool outside);
+			static Vector3 aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC);
+
+			// Returns true if pos is equal to the position of the end mesh's center
+			static bool finished(Vector3 pos);
 
 
 		private:

@@ -25,12 +25,17 @@ int Event_CreateSoldierNPC::l_Construct(lua_State* luaVM)
 	
 	// get arguments from stack
 	int numArgs, numArgsConst;
-	numArgs = numArgsConst = 19;
+	numArgs = numArgsConst = 23;
 
 	PE::GameContext *pContext = (PE::GameContext*)(lua_touserdata(luaVM, -numArgs--));
 
 	// this function should only be called frm game thread, so we can use game thread thread owenrship mask
 	Event_CreateSoldierNPC *pEvt = new(h) Event_CreateSoldierNPC(pContext->m_gameThreadThreadOwnershipMask);
+
+	pEvt->startCell = lua_tonumber(luaVM, -numArgs--);
+	pEvt->endCell = lua_tonumber(luaVM, -numArgs--);
+	pEvt->cycle = lua_tonumber(luaVM, -numArgs--);
+	pEvt->hostility = lua_tostring(luaVM, -numArgs--);
 
 	const char* name = lua_tostring(luaVM, -numArgs--);
 	const char* package = lua_tostring(luaVM, -numArgs--);

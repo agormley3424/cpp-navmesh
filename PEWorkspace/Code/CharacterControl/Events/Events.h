@@ -2,6 +2,7 @@
 #define _CHARACTER_CONTROL_EVENTS_
 
 #include "PrimeEngine/Events/StandardEvents.h"
+#include <string>
 
 namespace CharacterControl
 {
@@ -22,6 +23,11 @@ struct Event_CreateSoldierNPC : public PE::Events::Event_CREATE_MESH
 	char m_gunMeshName[64];
 	char m_gunMeshPackage[64];
 	char m_patrolWayPoint[32];
+
+	signed int startCell;
+	signed int endCell;
+	bool cycle;
+	std::string hostility;
 };
 
 struct Event_MoveTank_C_to_S : public PE::Events::Event, public PE::Networkable

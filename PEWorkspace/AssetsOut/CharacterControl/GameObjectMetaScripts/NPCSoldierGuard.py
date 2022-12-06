@@ -11,6 +11,11 @@ function fillMetaInfoTable(args) -- the script fromat requires existance of this
 args['myScript']="SoldierNPC.lua"
 args['myScriptPackage']="CharacterControl"
 
+args['startCell'] = 1
+args['endCell'] = 1
+args['cycle'] = 0
+args['hostility'] = "friendly"
+
 args['skinName'] = "SoldierTransform.mesha"
 args['skinPackage'] = "Soldier"
 

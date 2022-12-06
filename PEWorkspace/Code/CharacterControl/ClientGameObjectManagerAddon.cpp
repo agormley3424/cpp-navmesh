@@ -66,6 +66,11 @@ void ClientGameObjectManagerAddon::createSoldierNPC(Event_CreateSoldierNPC *pTru
 	SoldierNPC *pSoldierNPC = new(hSoldierNPC) SoldierNPC(*m_pContext, m_arena, hSoldierNPC, pTrueEvent);
 	pSoldierNPC->addDefaultComponents();
 
+	pSoldierNPC->startCell = pTrueEvent->startCell;
+	pSoldierNPC->endCell = pTrueEvent->endCell;
+	pSoldierNPC->cycle = pTrueEvent->cycle;
+	pSoldierNPC->hostility = pTrueEvent->hostility;
+
 	// add the soldier as component to the ObjecManagerComponentAddon
 	// all objects of this demo live in the ObjecManagerComponentAddon
 	addComponent(hSoldierNPC);
