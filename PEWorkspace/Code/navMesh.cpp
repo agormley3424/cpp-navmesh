@@ -259,9 +259,14 @@ namespace CharacterControl {
 			return endCell.getCenter() == pos;
 		}
 
-		Vector3 navMesh::aStar()
+		navCell* navMesh::aStar()
 		{
 			return aStar(*defaultStart, *defaultEnd);
+		}
+
+		navCell* navMesh::aStar(SoldierNPC* sNPC)
+		{
+			return aStar(sNPC->startCell, sNPC->endCell);
 		}
 
 		//Vector3 navMesh::aStar(Vector3 soldierPos, bool outside, SoldierNPC* sNPC)
@@ -296,43 +301,20 @@ namespace CharacterControl {
 		//	}
 		//}
 
-		Vector3 navMesh::aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC)
+		navCell* navMesh::aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC)
 		{
 			if (outside)
 			{
-				navCell* nearest = nullptr;
-				double minDist = std::numeric_limits<double>::max();
-				for (auto iter = cells.begin(); iter != cells.end(); iter++)
-				{
-					double tempDist = (soldierPos - (iter->second.getCenter())).length();
-					if (tempDist - minDist < std::numeric_limits<double>::epsilon())
-					{
-						nearest = &(iter->second);
-						minDist = tempDist;
-					}
-				}
-
-				assert(nearest != nullptr);
-
-				if (abs(minDist - 1) > std::numeric_limits<double>::epsilon())
-				{
-					outside = false;
-					sNPC->startCell = nearest->getID();
-					return aStar(sNPC->startCell, sNPC->endCell);
-				}
-				else
-				{
-					return aStar(nearest->getID(), nearest->getID());
-				}
+				return aStar(sNPC->startCell, sNPC->startCell);
 			}
 			else
 			{
-				return aStar(sNPC->startCell, sNPC->endCell);
+				return aStar(sNPC->lastWayPoint, sNPC->endCell);
 			}
 		}
 
 		// Returns the next navCell to be moved to
-		Vector3 navMesh::aStar(unsigned int start, unsigned int end)
+		navCell* navMesh::aStar(unsigned int start, unsigned int end)
 		{
 			navCell& startCell = cells.find(start)->second;
 			navCell* startAddress = &startCell;
@@ -341,7 +323,7 @@ namespace CharacterControl {
 
 			if (start == end)
 			{
-				return startCell.getCenter();
+				return startAddress;
 			}
 
 			// Does A* update farthest known distance from the source like Dijkstra's, or nah?
@@ -379,7 +361,7 @@ namespace CharacterControl {
 						targetCell = targetCell->getParent();
 					}
 
-					return targetCell->getCenter();
+					return targetCell;
 				}
 
 				std::forward_list<navCell*>* row;
@@ -415,7 +397,7 @@ namespace CharacterControl {
 			}
 
 			// If nothing has been returned yet, something has gone wrong
-			return Vector3(-1, -1, -1);
+			return nullptr;
 		}
 	}
 }

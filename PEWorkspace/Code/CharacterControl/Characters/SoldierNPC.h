@@ -18,12 +18,13 @@ struct SoldierNPC : public PE::Components::Component
 
 	virtual void addDefaultComponents();
 
-	unsigned int lastWaypoint = -1;
-	unsigned int currentWayPoint = -1;
+	int lastWayPoint = -1;
+	int currentWayPoint = -1;
 
 	signed int startCell;
 	signed int endCell;
 	bool cycle;
+	bool outside = true;
 	std::string hostility;
 };
 }; // namespace Components

@@ -35,7 +35,7 @@ namespace CharacterControl {
 			static void unblockCell(unsigned int cellID);
 
 			// Returns the center of the next navCell to be moved to
-			static Vector3 aStar(unsigned int start, unsigned int end);
+			static navCell* aStar(unsigned int start, unsigned int end);
 
 			// Returns the manhattan distance between two vectors
 			static float manhattan(Vector3 vec1, Vector3 vec2);
@@ -50,10 +50,13 @@ namespace CharacterControl {
 			static void setDefaults(unsigned int start, unsigned int end);
 
 			// Run A* with default values
-			static Vector3 aStar();
+			static navCell* aStar();
+
+			// Run A* with a soldier's beginning and end cells
+			static navCell* aStar(SoldierNPC* sNPC);
 
 			// Run A* with a default end, and a start position closest to the soldier
-			static Vector3 aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC);
+			static navCell* aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC);
 
 			// Returns true if pos is equal to the position of the end mesh's center
 			static bool finished(Vector3 pos);

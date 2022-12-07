@@ -1,11 +1,6 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (..\build-intermediate\x32\Debug\CharacterControl-win32d3d9\) contains files shared from another project (UnitTests2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
   SoldierNPCBehaviorSM.cpp
-  ClientCharacterControlGame.cpp
-  ClientGameObjectManagerAddon.cpp
-  navMesh.cpp
-c:\users\aaron\desktop\schoolwork\csci_522\milestone_2\peworkspace\code\navmesh.cpp(367): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\aaron\desktop\schoolwork\csci_522\milestone_2\peworkspace\code\navmesh.cpp(399): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.

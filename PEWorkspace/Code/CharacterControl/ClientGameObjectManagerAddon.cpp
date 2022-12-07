@@ -70,6 +70,8 @@ void ClientGameObjectManagerAddon::createSoldierNPC(Event_CreateSoldierNPC *pTru
 	pSoldierNPC->endCell = pTrueEvent->endCell;
 	pSoldierNPC->cycle = pTrueEvent->cycle;
 	pSoldierNPC->hostility = pTrueEvent->hostility;
+	pSoldierNPC->lastWayPoint = -1;
+	pSoldierNPC->currentWayPoint = pSoldierNPC->startCell;
 
 	// add the soldier as component to the ObjecManagerComponentAddon
 	// all objects of this demo live in the ObjecManagerComponentAddon
