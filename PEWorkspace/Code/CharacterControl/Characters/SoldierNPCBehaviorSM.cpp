@@ -66,6 +66,29 @@ void SoldierNPCBehaviorSM::do_SoldierNPCMovementSM_Event_TARGET_REACHED(PE::Even
 	if (m_state == PATROLLING_WAYPOINTS)
 	{
 		SoldierNPC* pSol = getFirstParentByTypePtr<SoldierNPC>();
+
+		navMesh::unblockCell(pSol->lastWayPoint);
+		pSol->lastWayPoint = pSol->currentWayPoint;
+
+		// If the soldier has reached his destination
+		if (pSol->currentWayPoint == pSol->endCell)
+		{
+			if (pSol->cycle)
+			{
+				int tempVal = pSol->startCell;
+				pSol->startCell = pSol->endCell;
+				pSol->endCell = tempVal;
+			}
+			else
+			{
+				m_state = IDLE;
+				navMesh::blockCell(pSol->currentWayPoint);
+				int a = 4;
+
+				return;
+			}
+		}
+
 		PE::Handle hSoldierSceneNode = pSol->getFirstComponentHandle<PE::Components::SceneNode>();
 		Matrix4x4 base = hSoldierSceneNode.getObject<PE::Components::SceneNode>()->m_worldTransform;
 
@@ -76,8 +99,14 @@ void SoldierNPCBehaviorSM::do_SoldierNPCMovementSM_Event_TARGET_REACHED(PE::Even
 
 		m_curPatrolPos = pWP;
 
-		pSol->lastWayPoint = pSol->currentWayPoint;
+
+
+
 		pSol->currentWayPoint = nCell->getID();
+		pSol->targetPos = pWP;
+
+		navMesh::blockCell(pSol->lastWayPoint);
+		navMesh::blockCell(pSol->currentWayPoint);
 
 		outside = false;
 
@@ -90,21 +119,7 @@ void SoldierNPCBehaviorSM::do_SoldierNPCMovementSM_Event_TARGET_REACHED(PE::Even
 		// release memory now that event is processed
 		h.release();
 
-		// If the soldier has reached his destination
-		if (pSol->currentWayPoint == pSol->endCell)
-		{
-			if (pSol->cycle)
-			{
-				int tempVal = pSol->startCell;
-				pSol->startCell = pSol->endCell;
-				pSol->endCell = tempVal;
-				pSol->lastWayPoint = pSol->currentWayPoint;
-			}
-			else
-			{
-				m_state = IDLE;
-			}
-		}
+
 			// no need to send the event. movement state machine will automatically send event to animation state machine to play idle animation
 	}
 }
@@ -165,9 +180,16 @@ void SoldierNPCBehaviorSM::do_PRE_RENDER_needsRC(PE::Events::Event *pEvt)
 		
 			//we can also construct points ourself
 			bool sent = false;
+			Vector3 pWP;
 				//WayPoint *pWP = pGameObjectManagerAddon->getWayPoint(m_curPatrolWayPoint);
-			navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
-			Vector3 pWP = nCell->getCenter();
+			if (outside) {
+				navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
+				pWP = nCell->getCenter();
+			}
+			else
+			{
+				pWP = pSol->targetPos;
+			}
 				//if (pWP)
 				Vector3 target = pWP;
 				Vector3 pos = base.getPos();
@@ -232,8 +254,17 @@ void SoldierNPCBehaviorSM::do_UPDATE(PE::Events::Event* pEvt)
 			PE::Handle hSoldierSceneNode = pSol->getFirstComponentHandle<PE::Components::SceneNode>();
 			Matrix4x4 base = hSoldierSceneNode.getObject<PE::Components::SceneNode>()->m_worldTransform;
 
-			navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
-			Vector3 pWP = nCell->getCenter();
+			Vector3 pWP;
+
+			if (outside) {
+				navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
+				pWP = nCell->getCenter();
+			}
+			else
+			{
+				pWP = pSol->targetPos;
+			}
+
 			m_state = PATROLLING_WAYPOINTS;
 			PE::Handle h("SoldierNPCMovementSM_Event_MOVE_TO", sizeof(SoldierNPCMovementSM_Event_MOVE_TO));
 			Events::SoldierNPCMovementSM_Event_MOVE_TO* pEvt = new(h) SoldierNPCMovementSM_Event_MOVE_TO(pWP);

@@ -25,6 +25,7 @@ struct SoldierNPC : public PE::Components::Component
 	signed int endCell;
 	bool cycle;
 	bool outside = true;
+	Vector3 targetPos;
 	std::string hostility;
 };
 }; // namespace Components

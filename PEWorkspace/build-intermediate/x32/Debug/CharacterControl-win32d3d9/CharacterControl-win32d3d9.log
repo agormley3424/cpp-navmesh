@@ -1,10 +1,8 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (..\build-intermediate\x32\Debug\CharacterControl-win32d3d9\) contains files shared from another project (UnitTests2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
-  SoldierNPCBehaviorSM.cpp
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(400,5): warning MSB8029: The Intermediate directory or Output directory cannot reside under the Temporary directory as it could lead to issues with incremental build.
-SoldierNPC.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   CharacterControl-win32d3d9.vcxproj -> C:\Users\aaron\Desktop\Schoolwork\CSCI_522\Milestone_2\PEWorkspace\Code\..\build\CharacterControl-win32d3d9.exe
   CharacterControl-win32d3d9.vcxproj -> ..\build\CharacterControl-win32d3d9.pdb (Full PDB)
   ..\External\DownloadedLibraries\glew-1.9.0\bin\glew32.dll

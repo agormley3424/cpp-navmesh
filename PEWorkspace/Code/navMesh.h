@@ -26,16 +26,14 @@ namespace CharacterControl {
 			// You can remove the null nodes from the graph if you want, but it'll take n+m instructions
 			static void removeCell(unsigned int cellID);
 
-			// Removes the cell from the graph, but keeps it in the cells vector
+			// Marks the designated cell as 'blocked'
 			static void blockCell(unsigned int cellID);
 
-			// Restores a cell to the graph
-			// If this cell is already in the graph, it should throw an error
-			// If this cell isn't in the cells array, it should throw an error
+			// Marks the designated cell as not 'blocked'
 			static void unblockCell(unsigned int cellID);
 
 			// Returns the center of the next navCell to be moved to
-			static navCell* aStar(unsigned int start, unsigned int end);
+			static navCell* aStar(unsigned int start, unsigned int end, SoldierNPC* sNPC);
 
 			// Returns the manhattan distance between two vectors
 			static float manhattan(Vector3 vec1, Vector3 vec2);

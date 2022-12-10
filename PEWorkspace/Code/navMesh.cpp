@@ -119,95 +119,107 @@ namespace CharacterControl {
 			cells.erase(cellID);
 		}
 
-		// Removes the cell from the graph, but keeps it in the cells vector
-		// It might be more efficient to just check if a cell is blocked or not, rather than remove it from the entire graph...
+		//// Removes the cell from the graph, but keeps it in the cells vector
+		//// It might be more efficient to just check if a cell is blocked or not, rather than remove it from the entire graph...
+		//void navMesh::blockCell(unsigned int cellID)
+		//{
+		//	auto iter = cells.find(cellID);
+		//	navCell* cellAddress = &(iter->second);
+		//	navCell& cellProxy = iter->second;
+
+		//	if (cellProxy.isBlocked())
+		//	{
+		//		std::cerr << "navMesh.cpp: blockCell Error: Line 75: Attempt to block cell already blocked\n";
+		//		return;
+		//	}
+
+		//	cellProxy.block();
+
+		//	// Remove from the graph
+		//	// It's more efficient to compare IDs than whole objects
+		//	// Oh wait, I can totally overload the compare operator! I'll do that
+
+		//	graph.erase(cellID);
+
+
+
+		//	for (auto row = graph.begin(); row != graph.end(); row++)
+		//	{
+		//		std::forward_list<navCell*>& listProxy = row->second;
+		//		for (auto col = listProxy.begin(); col != listProxy.end(); col++)
+		//		{
+		//			auto future = col;
+		//			future++;
+		//			if (future != listProxy.end() && *future == cellAddress)
+		//			{
+		//				listProxy.erase_after(col);
+
+		//				// A particular node should only ever be a neighbor of another node once, so I can break early
+		//				break;
+		//			}
+		//		}
+		//	}
+		//}
+
+		//// Restores a cell to the graph
+		//// If this cell is already in the graph, it should throw an error
+		//// If this cell isn't in the cells array, it should throw an error
+		//void navMesh::unblockCell(unsigned int cellID)
+		//{
+		//	if (cells.find(cellID) == cells.end())
+		//	{
+		//		std::cerr << "navMesh.cpp: unblockCell Error: Line 163: Attempt to unblock cell not currently stored\n";
+		//		return;
+		//	}
+
+		//	auto iter = cells.find(cellID);
+		//	navCell* cellAddress = &(iter->second);
+		//	navCell& cellProxy = iter->second;
+
+		//	if (cellProxy.isBlocked())
+		//	{
+		//		std::cerr << "navMesh.cpp: unblockCell Error: Line 96: Attempt to unblock cell already unblocked\n";
+		//		return;
+		//	}
+
+		//	// Else
+
+		//	cellProxy.unBlock();
+
+		//	unsigned int newID = cellProxy.getID();
+
+		//	// Add a new linked list for this cell
+		//	std::forward_list<navCell*> newRow;
+		//	newRow.push_front(cellAddress);
+		//	graph.insert({ newID, newRow });
+
+		//	for (auto iter = graph.begin(); iter != graph.end(); iter++)
+		//	{
+		//		unsigned int graphID = iter->first;
+
+		//		if (cellProxy.hasNeighbor(graphID))
+		//		{
+		//			std::forward_list<navCell*>& row = iter->second;
+
+		//			// Insert the new cell into the neighbor's row
+		//			row.insert_after(row.begin(), cellAddress);
+
+		//			// Insert the neighbor into the new cell's row
+		//			graph[newID].insert_after(graph[newID].begin(), row.front());
+		//		}
+		//	}
+		//}
+
+		// Marks the designated cell as 'blocked'
 		void navMesh::blockCell(unsigned int cellID)
 		{
-			auto iter = cells.find(cellID);
-			navCell* cellAddress = &(iter->second);
-			navCell& cellProxy = iter->second;
-
-			if (cellProxy.isBlocked())
-			{
-				std::cerr << "navMesh.cpp: blockCell Error: Line 75: Attempt to block cell already blocked\n";
-				return;
-			}
-
-			cellProxy.block();
-
-			// Remove from the graph
-			// It's more efficient to compare IDs than whole objects
-			// Oh wait, I can totally overload the compare operator! I'll do that
-
-			graph.erase(cellID);
-
-
-
-			for (auto row = graph.begin(); row != graph.end(); row++)
-			{
-				std::forward_list<navCell*>& listProxy = row->second;
-				for (auto col = listProxy.begin(); col != listProxy.end(); col++)
-				{
-					auto future = col;
-					future++;
-					if (future != listProxy.end() && *future == cellAddress)
-					{
-						listProxy.erase_after(col);
-
-						// A particular node should only ever be a neighbor of another node once, so I can break early
-						break;
-					}
-				}
-			}
+			cells.find(cellID)->second.block();
 		}
 
-		// Restores a cell to the graph
-		// If this cell is already in the graph, it should throw an error
-		// If this cell isn't in the cells array, it should throw an error
+		// Marks the designated cell as not 'blocked'
 		void navMesh::unblockCell(unsigned int cellID)
 		{
-			if (cells.find(cellID) == cells.end())
-			{
-				std::cerr << "navMesh.cpp: unblockCell Error: Line 163: Attempt to unblock cell not currently stored\n";
-				return;
-			}
-
-			auto iter = cells.find(cellID);
-			navCell* cellAddress = &(iter->second);
-			navCell& cellProxy = iter->second;
-
-			if (cellProxy.isBlocked())
-			{
-				std::cerr << "navMesh.cpp: unblockCell Error: Line 96: Attempt to unblock cell already unblocked\n";
-				return;
-			}
-
-			// Else
-
-			cellProxy.unBlock();
-
-			unsigned int newID = cellProxy.getID();
-
-			// Add a new linked list for this cell
-			std::forward_list<navCell*> newRow;
-			newRow.push_front(cellAddress);
-			graph.insert({ newID, newRow });
-
-			for (auto iter = graph.begin(); iter != graph.end(); iter++)
-			{
-				unsigned int graphID = iter->first;
-
-				if (cellProxy.hasNeighbor(graphID))
-				{
-					std::forward_list<navCell*>& row = iter->second;
-
-					// Insert the new cell into the neighbor's row
-					row.insert_after(row.begin(), cellAddress);
-
-					// Insert the neighbor into the new cell's row
-					graph[newID].insert_after(graph[newID].begin(), row.front());
-				}
-			}
+			cells.find(cellID)->second.unBlock();
 		}
 
 		float navMesh::manhattan(Vector3 vec1, Vector3 vec2)
@@ -261,12 +273,12 @@ namespace CharacterControl {
 
 		navCell* navMesh::aStar()
 		{
-			return aStar(*defaultStart, *defaultEnd);
+			return aStar(*defaultStart, *defaultEnd, nullptr);
 		}
 
 		navCell* navMesh::aStar(SoldierNPC* sNPC)
 		{
-			return aStar(sNPC->startCell, sNPC->endCell);
+			return aStar(sNPC->startCell, sNPC->endCell, sNPC);
 		}
 
 		//Vector3 navMesh::aStar(Vector3 soldierPos, bool outside, SoldierNPC* sNPC)
@@ -305,16 +317,16 @@ namespace CharacterControl {
 		{
 			if (outside)
 			{
-				return aStar(sNPC->startCell, sNPC->startCell);
+				return &(cells.find(sNPC->startCell)->second);
 			}
 			else
 			{
-				return aStar(sNPC->lastWayPoint, sNPC->endCell);
+				return aStar(sNPC->lastWayPoint, sNPC->endCell, sNPC);
 			}
 		}
 
 		// Returns the next navCell to be moved to
-		navCell* navMesh::aStar(unsigned int start, unsigned int end)
+		navCell* navMesh::aStar(unsigned int start, unsigned int end, SoldierNPC* sNPC)
 		{
 			navCell& startCell = cells.find(start)->second;
 			navCell* startAddress = &startCell;
@@ -372,6 +384,11 @@ namespace CharacterControl {
 				for (; iter != row->end(); iter++)
 				{
 					navCell* neighbor = *iter;
+
+					if (neighbor->isBlocked() && neighbor->getID() != sNPC->currentWayPoint)
+					{
+						continue;
+					}
 
 					// If we haven't found this node already, add it to the fringe
 					if (discovered.find(neighbor->getID()) == discovered.end())
