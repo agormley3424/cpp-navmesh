@@ -94,7 +94,7 @@ void SoldierNPCBehaviorSM::do_SoldierNPCMovementSM_Event_TARGET_REACHED(PE::Even
 
 		// have next waypoint to go to
 
-		navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
+		navCell* nCell = navMesh::aStar(base.getPos(), outside, strcmp(m_curPatrolWayPoint, "0"), pSol);
 		Vector3 pWP = nCell->getCenter();
 
 		m_curPatrolPos = pWP;
@@ -174,21 +174,26 @@ void SoldierNPCBehaviorSM::do_PRE_RENDER_needsRC(PE::Events::Event *pEvt)
 		PE::Handle hSoldierSceneNode = pSol->getFirstComponentHandle<PE::Components::SceneNode>();
 		Matrix4x4 base = hSoldierSceneNode.getObject<PE::Components::SceneNode>()->m_worldTransform;
 		
-		DebugRenderer::Instance()->createTextMesh(
-			buf, false, false, true, false, 0,
-			base.getPos(), 0.01f, pRealEvent->m_threadOwnershipMask);
+		//DebugRenderer::Instance()->createTextMesh(
+		//	buf, false, false, true, false, 0,
+		//	base.getPos(), 0.01f, pRealEvent->m_threadOwnershipMask);
 		
 			//we can also construct points ourself
 			bool sent = false;
 			Vector3 pWP;
 				//WayPoint *pWP = pGameObjectManagerAddon->getWayPoint(m_curPatrolWayPoint);
 			if (outside) {
-				navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
+				navCell* nCell = navMesh::aStar(base.getPos(), outside, strcmp(m_curPatrolWayPoint, "0"), pSol);
 				pWP = nCell->getCenter();
 			}
 			else
 			{
 				pWP = pSol->targetPos;
+			}
+
+			if (m_state != IDLE && strcmp(m_curPatrolWayPoint, "0") )
+			{
+				navMesh::colorCells(outside, pSol);
 			}
 				//if (pWP)
 				Vector3 target = pWP;
@@ -257,7 +262,7 @@ void SoldierNPCBehaviorSM::do_UPDATE(PE::Events::Event* pEvt)
 			Vector3 pWP;
 
 			if (outside) {
-				navCell* nCell = navMesh::aStar(base.getPos(), outside, pSol);
+				navCell* nCell = navMesh::aStar(base.getPos(), outside, strcmp(m_curPatrolWayPoint, "0"), pSol);
 				pWP = nCell->getCenter();
 			}
 			else

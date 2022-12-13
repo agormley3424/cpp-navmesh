@@ -74,6 +74,8 @@ namespace CharacterControl {
 
 			navCell* getParent();
 
+			void drawCell(Vector3 color);
+
 			unsigned int id;
 			std::string shape;
 			std::vector<Vector3> cornerPoints;

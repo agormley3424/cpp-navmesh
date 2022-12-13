@@ -313,10 +313,30 @@ namespace CharacterControl {
 		//	}
 		//}
 
-		navCell* navMesh::aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC)
+		void navMesh::colorCells(bool& outside, SoldierNPC* sNPC)
 		{
 			if (outside)
 			{
+				cells.find(sNPC->startCell)->second.drawCell(Vector3(255, 230, 0));
+			}
+			else
+			{
+				cells.find(sNPC->lastWayPoint)->second.drawCell(Vector3(0, 255, 0));
+				cells.find(sNPC->currentWayPoint)->second.drawCell(Vector3(255, 230, 0));
+			}
+
+			cells.find(sNPC->endCell)->second.drawCell(Vector3(255, 0, 0 ));
+		}
+
+		navCell* navMesh::aStar(Vector3 soldierPos, bool& outside, bool debugging, SoldierNPC* sNPC)
+		{
+			if (outside)
+			{
+				if (debugging)
+				{
+					cells.find(sNPC->startCell)->second.drawCell(Vector3(255, 230, 0));
+				}
+
 				return &(cells.find(sNPC->startCell)->second);
 			}
 			else

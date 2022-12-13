@@ -54,10 +54,13 @@ namespace CharacterControl {
 			static navCell* aStar(SoldierNPC* sNPC);
 
 			// Run A* with a default end, and a start position closest to the soldier
-			static navCell* aStar(Vector3 soldierPos, bool& outside, SoldierNPC* sNPC);
+			static navCell* aStar(Vector3 soldierPos, bool& outside, bool debugging, SoldierNPC* sNPC);
 
 			// Returns true if pos is equal to the position of the end mesh's center
 			static bool finished(Vector3 pos);
+
+			// Color the cells of a soldier
+			static void navMesh::colorCells(bool& outside, SoldierNPC* sNPC);
 
 
 		private:

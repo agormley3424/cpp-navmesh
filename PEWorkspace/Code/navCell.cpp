@@ -1,6 +1,7 @@
 #include "navCell.h"
 #include "PrimeEngine/Events/Component.h"
 #include <iostream>
+#include "PrimeEngine/Scene/DebugRenderer.h"
 
 using namespace PE;
 using namespace PE::Components;
@@ -91,19 +92,40 @@ namespace CharacterControl {
 		navCell::navCell(PE::GameContext& context, PE::MemoryArena arena, PE::Handle hMyself, const Events::Event_CREATE_NAVCELL* pEvt)
 			: Component(context, arena, hMyself)
 		{
-			//id = pEvt->m_id;
-
-			//for (auto i = pEvt->m_neighbors.begin(); i != pEvt->m_neighbors.end(); i++)
-			//{
-			//	neighbors.insert(*i);
-			//}
-
 			m_base = pEvt->m_base;
 			center = pEvt->m_base.getPos();
 			neighbors = pEvt->m_neighbors;
 			shape = pEvt->m_shape;
 			id = pEvt->m_id;
 			value = pEvt->m_value;
+			cornerPoints = { center + Vector3(-1.0, 0, -1.0), center + Vector3(1.0, 0, -1.0),
+											center + Vector3(1.0, 0, -1.0), center + Vector3(1.0, 0, 1.0),
+											center + Vector3(1.0, 0, 1.0), center + Vector3(-1.0, 0, 1.0),
+											center + Vector3(-1.0, 0, 1.0), center + Vector3(-1.0, 0, -1.0) };
+		}
+
+		void navCell::drawCell(Vector3 color)
+		{
+			Vector3 linePoints[16];
+
+			for (int i = 0, j = 0; i < 16; ++i)
+			{
+				if (i % 2 == 0)
+				{
+					linePoints[i] = cornerPoints[j];
+					++j;
+				}
+				else
+				{
+					linePoints[i] = color;
+				}
+
+				int a = 1;
+			}
+
+			int b = 2;
+
+			DebugRenderer::Instance()->createLineMesh(false, Matrix4x4(), &linePoints[0].m_x, 8, 2);
 		}
 
 		void navCell::addDefaultComponents()
