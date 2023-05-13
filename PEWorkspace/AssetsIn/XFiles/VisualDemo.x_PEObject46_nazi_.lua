@@ -18,7 +18,7 @@ args['gunMeshPackage'] = "CharacterControl"
 args['npcType'] = 'Guard'
 
 args['startCell'] = 1
-args['endCell'] = 6
+args['endCell'] = 5
 args['cycle'] = 1
 args['hostility'] = "friendly"
 

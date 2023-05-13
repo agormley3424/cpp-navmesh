@@ -10,7 +10,7 @@ args['myScriptPackage']="CharacterControl"
 
 args['id'] = '1'
 args['neighbor1'] = '2'
-args['neighbor2'] = '-1'
+args['neighbor2'] = '14'
 args['neighbor3'] = '-1'
 args['neighbor4'] = '-1'
 args['value'] = '0'
